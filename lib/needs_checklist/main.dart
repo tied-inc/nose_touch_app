@@ -10,23 +10,33 @@ class NeedsChecklist extends StatefulWidget {
 class CheckListContent {
   final String title;
   final String subtitle;
-  bool value;
 
-  CheckListContent(this.title, this.subtitle, this.value);
+  CheckListContent(this.title, this.subtitle);
 }
 
 class _NeedsChecklistState extends State<NeedsChecklist> {
-  final Map<String, CheckListContent> data = {
-    "food": CheckListContent('食べ物', '最低５日分できれば７日分', false),
-    "water": CheckListContent('水', '最低５日分できれば７日分', false),
-    "medicine": CheckListContent('常備薬・療法食', '医師の指示があるものをお使いください', false),
-    "tableware": CheckListContent('食器', 'ラップなどあると尚よし', false),
-    'toiletries': CheckListContent('トイレ用品', 'ペットシーツ、排泄物用ビニール、トイレ用の箱など', false),
-    "carryBugOrCage": CheckListContent('避難用バッグ・ケージ', 'ペットの大きさに合ったもの', false),
-    'collarAndLeashOrHarness':
-        CheckListContent('首輪・リード・ハーネス', '伸びないものが好ましい', false),
-    "laundryNet": CheckListContent('洗濯ネット', '猫のみ。避難先でのストレス軽減のため', false),
-    "towelOrBlanket": CheckListContent('タオル・毛布', '避難先でのストレス軽減のため', false),
+  final data = [
+    {"food": false},
+    {"water": false},
+    {"medicine": false},
+    {"tableware": false},
+    {"toiletries": false},
+    {"carryBugOrCage": false},
+    {"collarAndLeashOrHarness": false},
+    {"laundryNet": false},
+    {"towelOrBlanket": false}
+  ];
+
+  final Map<String, CheckListContent> titleMap = {
+    "food": CheckListContent('食べ物', '最低５日分できれば７日分'),
+    "water": CheckListContent('水', '最低５日分できれば７日分'),
+    "medicine": CheckListContent('常備薬・療法食', '医師の指示があるものをお使いください'),
+    "tableware": CheckListContent('食器', 'ラップなどあると尚よし'),
+    'toiletries': CheckListContent('トイレ用品', 'ペットシーツ、排泄物用ビニール、トイレ用の箱など'),
+    "carryBugOrCage": CheckListContent('避難用バッグ・ケージ', 'ペットの大きさに合ったもの'),
+    'collarAndLeashOrHarness': CheckListContent('首輪・リード・ハーネス', '伸びないものが好ましい'),
+    "laundryNet": CheckListContent('洗濯ネット', '猫のみ。避難先でのストレス軽減のため'),
+    "towelOrBlanket": CheckListContent('タオル・毛布', '避難先でのストレス軽減のため'),
   };
 
   @override
@@ -34,18 +44,17 @@ class _NeedsChecklistState extends State<NeedsChecklist> {
     return Scaffold(
         body: Column(
       children: <Widget>[
-        for (var key in data.keys)
+        for (var item in data)
           CheckboxListTile(
-            value: data[key]!.value,
+            title: Text(titleMap[item.keys.first]!.title),
+            subtitle: Text(titleMap[item.keys.first]!.subtitle),
+            value: item.values.first,
             onChanged: (bool? value) {
               setState(() {
-                data[key]!.value = value!;
+                item[titleMap.keys.first] = value!;
               });
             },
-            controlAffinity: ListTileControlAffinity.leading,
-            title: Text(data[key]!.title),
-            subtitle: Text(data[key]!.subtitle),
-          ),
+          )
       ],
     ));
   }
