@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_safety/information_card/basic_info.dart';
-import 'package:pet_safety/information_card/health.dart';
+import 'package:pet_safety/presentation/information_card/basic_info.dart';
+import 'package:pet_safety/presentation/information_card/health.dart';
 
 class InformationCard extends StatefulWidget {
   const InformationCard({super.key});
