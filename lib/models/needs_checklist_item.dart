@@ -24,14 +24,4 @@ class NeedsChecklistItem {
     required this.createdAt,
     required this.updatedAt,
   });
-
-  static String createTableStmt() {
-    return '''CREATE TABLE needs_checklist_items (
-       id INTEGER PRIMARY KEY AUTOINCREMENT,
-       column TEXT NOT NULL,
-       value INTEGER NOT NULL,
-       created_at INTEGER NOT NULL,
-       updated_at INTEGER NOT NULL
-     )''';
-  }
 }
