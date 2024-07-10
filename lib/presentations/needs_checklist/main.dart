@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_safety/models/needs_checklist_item.dart';
 import 'package:pet_safety/services/needs_checklist_service.dart';
 
 class NeedsChecklist extends ConsumerWidget {
@@ -22,20 +23,7 @@ class NeedsChecklist extends ConsumerWidget {
                     subtitle: Text(item.col),
                     value: item.value,
                     onChanged: (bool? value) {
-                      final newItems = data
-                          .map((e) => e.id == item.id
-                              ? item.copyWith(value: value!)
-                              : e)
-                          .toList();
-                      final targetItem = newItems.firstWhere(
-                          (element) => element.id == item.id,
-                          orElse: () => item);
-
-                      ref.read(needsChecklistServiceProvider.notifier).state =
-                          AsyncData(newItems);
-                      ref
-                          .read(needsChecklistServiceProvider.notifier)
-                          .updateNeedsChecklistItem(targetItem);
+                      handleOnChange(data, item, value, ref);
                     }),
             ],
           )));
@@ -44,5 +32,20 @@ class NeedsChecklist extends ConsumerWidget {
           return Text(error.toString());
         },
         loading: () => const CircularProgressIndicator());
+  }
+
+  void handleOnChange(List<NeedsChecklistItem> data, NeedsChecklistItem item,
+      bool? value, WidgetRef ref) {
+    final newItems = data
+        .map((e) => e.id == item.id ? item.copyWith(value: value!) : e)
+        .toList();
+    final targetItem = newItems.firstWhere((element) => element.id == item.id,
+        orElse: () => item);
+
+    ref.read(needsChecklistServiceProvider.notifier).state =
+        AsyncData(newItems);
+    ref
+        .read(needsChecklistServiceProvider.notifier)
+        .updateNeedsChecklistItem(targetItem);
   }
 }
