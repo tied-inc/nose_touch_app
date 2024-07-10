@@ -16,7 +16,6 @@ class _MyHomePageState extends State<MyHomePage> {
   _MyHomePageState();
 
   int _selectedIndex = 0;
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -33,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           body: [
             const InformationCard(),
-            NeedsChecklist(),
+            const NeedsChecklist(),
           ].elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: const [

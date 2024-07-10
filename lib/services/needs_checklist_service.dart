@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:path/path.dart';
 import 'package:pet_safety/models/needs_checklist_item.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -8,8 +9,11 @@ part 'needs_checklist_service.g.dart';
 @riverpod
 class NeedsChecklistService extends _$NeedsChecklistService {
   @override
-  Future<List<NeedsChecklistItem>> build() {
-    return getNeedsChecklistItems();
+  Future<List<NeedsChecklistItem>> build() async {
+    // TODO
+    // - add insert checklist item data at first opening moment
+
+    return await getNeedsChecklistItems();
   }
 
   Future<Database> get database async {
@@ -17,10 +21,14 @@ class NeedsChecklistService extends _$NeedsChecklistService {
   }
 
   Future<Database> _initDatabase() async {
-    // final baseRoot = await getDatabasesPath();
-    const baseRoot = "/Users/hayata.yamamoto/work/pet_safety";
-    final p = join(baseRoot, 'pet_safety.db');
-    print(p);
+    final String p;
+    if (kDebugMode) {
+      const baseRoot = "/Users/hayata.yamamoto/work/pet_safety";
+      p = join(baseRoot, 'pet_safety.db');
+    } else {
+      final baseRoot = await getDatabasesPath();
+      p = join(baseRoot, 'pet_safety.db');
+    }
 
     // Open the database and store the reference.
     final database = openDatabase(
@@ -33,8 +41,6 @@ class NeedsChecklistService extends _$NeedsChecklistService {
       },
       version: 1,
     );
-
-    _onCreate(await database);
     return database;
   }
 
@@ -44,8 +50,8 @@ class NeedsChecklistService extends _$NeedsChecklistService {
       """
 CREATE TABLE IF NOT EXISTS needs_checklist_items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  column TEXT NOT NULL,
-  value INTEGER NOT NULL,
+  col TEXT NOT NULL,
+  value BOOL NOT NULL,
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL
 );
@@ -55,18 +61,34 @@ CREATE TABLE IF NOT EXISTS needs_checklist_items (
 
   Future<List<NeedsChecklistItem>> getNeedsChecklistItems() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps =
+    final List<Map<String, dynamic>> records =
         await db.query('needs_checklist_items');
 
-    return List.generate(maps.length, (i) {
-      return NeedsChecklistItem(
-        id: maps[i]['id'],
-        column: NeedsChecklistColumn.values
-            .firstWhere((e) => e.toString() == maps[i]['column']),
-        value: maps[i]['value'] == 1,
-        createdAt: maps[i]['created_at'],
-        updatedAt: maps[i]['updated_at'],
-      );
-    });
+    List<NeedsChecklistItem> data = [];
+    for (var item in records) {
+      data.add(NeedsChecklistItem(
+        id: item['id'],
+        col: item['col'],
+        value: item['value'] == 1 ? true : false,
+        createdAt: item['created_at'],
+        updatedAt: item['updated_at'],
+      ));
+    }
+    return data;
+  }
+
+  Future<NeedsChecklistItem> updateNeedsChecklistItem(
+      NeedsChecklistItem item) async {
+    final db = await database;
+    await db.update(
+      'needs_checklist_items',
+      {
+        'value': item.value ? 1 : 0,
+        'updated_at': DateTime.now().millisecondsSinceEpoch,
+      },
+      where: 'id = ?',
+      whereArgs: [item.id],
+    );
+    return item;
   }
 }

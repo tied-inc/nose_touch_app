@@ -8,20 +8,38 @@ class NeedsChecklist extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(needsChecklistServiceProvider);
+
     return state.when(
-        data: (data) => Scaffold(
-                body: Form(
-                    child: Column(
-              children: <Widget>[
-                for (var item in data)
-                  CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(item.column.name),
-                      subtitle: Text(item.column.name),
-                      value: item.value,
-                      onChanged: (bool? value) {})
-              ],
-            ))),
+        data: (data) {
+          return Scaffold(
+              body: Form(
+                  child: Column(
+            children: <Widget>[
+              for (var item in data)
+                CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: Text(item.col),
+                    subtitle: Text(item.col),
+                    value: item.value,
+                    onChanged: (bool? value) {
+                      final newItems = data
+                          .map((e) => e.id == item.id
+                              ? item.copyWith(value: value!)
+                              : e)
+                          .toList();
+                      final targetItem = newItems.firstWhere(
+                          (element) => element.id == item.id,
+                          orElse: () => item);
+
+                      ref.read(needsChecklistServiceProvider.notifier).state =
+                          AsyncData(newItems);
+                      ref
+                          .read(needsChecklistServiceProvider.notifier)
+                          .updateNeedsChecklistItem(targetItem);
+                    }),
+            ],
+          )));
+        },
         error: (error, stackTrace) {
           return Text(error.toString());
         },
