@@ -19,8 +19,8 @@ class NeedsChecklist extends ConsumerWidget {
               for (var item in data)
                 CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
-                    title: Text(item.col),
-                    subtitle: Text(item.col),
+                    title: Text(item.label),
+                    subtitle: Text(item.description),
                     value: item.value,
                     onChanged: (bool? value) {
                       handleOnChange(data, item, value, ref);

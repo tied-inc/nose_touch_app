@@ -23,7 +23,7 @@ class NeedsChecklistService extends _$NeedsChecklistService {
   Future<Database> _initDatabase() async {
     final String p;
     if (kDebugMode) {
-      const baseRoot = "/Users/hayata.yamamoto/work/pet_safety";
+      const baseRoot = ".";
       p = join(baseRoot, 'pet_safety.db');
     } else {
       final baseRoot = await getDatabasesPath();
@@ -36,7 +36,11 @@ class NeedsChecklistService extends _$NeedsChecklistService {
       // `path` package is best practice to ensure the path is correctly
       // constructed for each platform.
       p,
-      onCreate: (db, version) {
+      onOpen: (db) {
+        // Run the CREATE TABLE statement on the database.
+        // db.execute(
+        //   "CREATE TABLE needs_checklist_items(id INTEGER PRIMARY KEY, col TEXT, label TEXT, value BOOL, created_at INTEGER, updated_at INTEGER)",
+        // );
         return _onCreate(db);
       },
       version: 1,
@@ -44,19 +48,41 @@ class NeedsChecklistService extends _$NeedsChecklistService {
     return database;
   }
 
-  Future<void> _onCreate(Database database) {
+  Future<void> _onCreate(Database database) async {
     // Run the CREATE TABLE statement on the database.
-    return database.execute(
+    await database.execute(
       """
 CREATE TABLE IF NOT EXISTS needs_checklist_items (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   col TEXT NOT NULL,
+  label TEXT NOT NULL,
+  description TEXT NOT NULL,
   value BOOL NOT NULL,
   created_at INTEGER NOT NULL,
   updated_at INTEGER NOT NULL
 );
 """,
     );
+
+    final ret = await database.query('needs_checklist_items');
+    if (ret.length == 0) {
+      await database.transaction((txn) async {
+        for (var item in NeedsChecklistItem.defaultItems) {
+          await txn.insert(
+            'needs_checklist_items',
+            {
+              'id': item.id,
+              'col': item.col,
+              'label': item.label,
+              'description': item.description,
+              'value': item.value ? 1 : 0,
+              'created_at': item.createdAt,
+              'updated_at': item.updatedAt,
+            },
+          );
+        }
+      });
+    }
   }
 
   Future<List<NeedsChecklistItem>> getNeedsChecklistItems() async {
@@ -69,6 +95,8 @@ CREATE TABLE IF NOT EXISTS needs_checklist_items (
       data.add(NeedsChecklistItem(
         id: item['id'],
         col: item['col'],
+        label: item['label'],
+        description: item['description'],
         value: item['value'] == 1 ? true : false,
         createdAt: item['created_at'],
         updatedAt: item['updated_at'],
