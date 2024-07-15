@@ -18,6 +18,10 @@ class _BasicInfoState extends State<BasicInfo> {
     {'weight': '4.2kg'},
     {'characteristics': '鼻の近くにそばかす'},
     {'temper': '人懐っこいが臆病'},
+    {'medicalHistory': ''},
+    {'medicationStatus': ''},
+    {'hospital': ''},
+    {'hospitalPhone': ''},
   ];
 
   final Map<String, String> titleMap = {
@@ -30,6 +34,10 @@ class _BasicInfoState extends State<BasicInfo> {
     'weight': '体重',
     'characteristics': '特徴',
     'temper': '性格',
+    'medicalHistory': '病歴',
+    'medicationStatus': '服薬状況',
+    'hospital': 'かかりつけ病院',
+    'hospitalPhone': 'かかりつけ病院電話番号',
   };
 
   @override

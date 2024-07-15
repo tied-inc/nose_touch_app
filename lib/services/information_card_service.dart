@@ -1,11 +1,33 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+class InformationCardService {
+  Future show() async {
+    return {};
+  }
 
-part 'information_card_service.g.dart';
+  Future<List> getPets() async {
+    return [];
+  }
 
-@riverpod
-class InformationCardService extends $_InformationCardService {
-  @override
-  Future<dynamic> build() {
-    return "";
+  Future<Map> getPetDetails(int id) async {
+    return {};
+  }
+
+  Future<Map> addPet(Map pet) async {
+    return {};
+  }
+
+  Future<Map> updatePetDetails(Map pet) async {
+    return {};
+  }
+
+  Future<Map> deletePet(int id) async {
+    return {};
+  }
+
+  Future<Map> addVaccineHistory(Map vaccine) async {
+    return {};
+  }
+
+  Future<Map> updateVaccineHistory(Map vaccine) async {
+    return {};
   }
 }

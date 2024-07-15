@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           body: [
             const InformationCard(),
-            const NeedsChecklist(),
+            const NeedsChecklistView(),
           ].elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: const [
@@ -49,6 +49,32 @@ class _MyHomePageState extends State<MyHomePage> {
             selectedItemColor: Colors.amber[800],
             onTap: _onItemTapped,
           ),
+          drawer: _selectedIndex == 0
+              ? Drawer(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      const SizedBox(
+                          height: 120,
+                          child: DrawerHeader(
+                            child: Text('ペット'),
+                          )),
+                      ListTile(
+                        title: const Text('ベル'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text('ジル'),
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              : null,
         ));
   }
 }

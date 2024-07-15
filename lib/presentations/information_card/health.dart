@@ -9,21 +9,12 @@ class Health extends StatefulWidget {
 
 class _HealthState extends State<Health> {
   final data = [
-    {'medicalHistory': ''},
-    {'medicationStatus': ''},
-    {'hospital': ''},
-    {'hospitalPhone': ''},
-    {"divider": ""},
     {'when': '2024-01-01'},
     {'what': "3種混合ワクチン"},
     {'rabiesVaccination': 'テスト病院'},
     {'parasitePrevention': '1234-5678-9012'},
   ];
   final Map<String, String> titleMap = {
-    'medicalHistory': '病歴',
-    'medicationStatus': '服薬状況',
-    'hospital': 'かかりつけ病院',
-    'hospitalPhone': 'かかりつけ病院電話番号',
     'when': '接種日',
     'what': '種類',
     'rabiesVaccination': '狂犬病予防接種',

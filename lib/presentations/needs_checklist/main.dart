@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_safety/models/needs_checklist_item.dart';
 import 'package:pet_safety/services/needs_checklist_service.dart';
 
-class NeedsChecklist extends ConsumerWidget {
-  const NeedsChecklist({super.key});
+class NeedsChecklistView extends ConsumerWidget {
+  const NeedsChecklistView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,14 +15,17 @@ class NeedsChecklist extends ConsumerWidget {
               body: Form(
                   child: Column(
             children: <Widget>[
-              for (var item in data)
+              for (var item in data.items)
                 CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text(item.label),
                     subtitle: Text(item.description),
                     value: item.value,
                     onChanged: (bool? value) {
-                      handleOnChange(data, item, value, ref);
+                      final notifier =
+                          ref.read(needsChecklistServiceProvider.notifier);
+                      notifier.toggleItemValue(item, value!);
+                      ref.invalidate(needsChecklistServiceProvider);
                     }),
             ],
           )));
@@ -32,20 +34,5 @@ class NeedsChecklist extends ConsumerWidget {
           return Text(error.toString());
         },
         loading: () => const CircularProgressIndicator());
-  }
-
-  void handleOnChange(List<NeedsChecklistItem> data, NeedsChecklistItem item,
-      bool? value, WidgetRef ref) {
-    final newItems = data
-        .map((e) => e.id == item.id ? item.copyWith(value: value!) : e)
-        .toList();
-    final targetItem = newItems.firstWhere((element) => element.id == item.id,
-        orElse: () => item);
-
-    ref.read(needsChecklistServiceProvider.notifier).state =
-        AsyncData(newItems);
-    ref
-        .read(needsChecklistServiceProvider.notifier)
-        .updateNeedsChecklistItem(targetItem);
   }
 }

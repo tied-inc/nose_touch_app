@@ -15,7 +15,7 @@ class _InformationCardState extends State<InformationCard>
 
   final tabs = const [
     Tab(icon: Icon(Icons.info), text: '基本情報'),
-    Tab(icon: Icon(Icons.health_and_safety), text: '健康情報'),
+    Tab(icon: Icon(Icons.vaccines), text: 'ワクチン接種情報'),
   ];
 
   @override
@@ -33,20 +33,21 @@ class _InformationCardState extends State<InformationCard>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: TabBar(
-              controller: _tabController,
-              indicatorColor: Colors.grey,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              tabs: tabs),
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: const [
-            BasicInfo(),
-            Health(),
-          ],
-        ));
+      appBar: AppBar(
+        title: TabBar(
+            controller: _tabController,
+            indicatorColor: Colors.grey,
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
+            tabs: tabs),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: const [
+          BasicInfo(),
+          Health(),
+        ],
+      ),
+    );
   }
 }
