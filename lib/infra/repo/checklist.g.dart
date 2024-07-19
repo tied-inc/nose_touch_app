@@ -6,7 +6,7 @@ part of 'checklist.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$checklistRepoHash() => r'b57d0f62f9821f2c39d2d3244b2cb899cee2d9d1';
+String _$checklistRepoHash() => r'd3a1196d6e47b2a454051251ad01b20cd03e0c2b';
 
 /// See also [ChecklistRepo].
 @ProviderFor(ChecklistRepo)

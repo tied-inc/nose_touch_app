@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pet_safety/presentations/information_card/basic_info.dart';
 import 'package:pet_safety/presentations/information_card/health.dart';
 
-class InformationCard extends StatefulWidget {
-  const InformationCard({super.key});
+class InformationCardView extends StatefulWidget {
+  const InformationCardView({super.key});
 
   @override
-  State<InformationCard> createState() => _InformationCardState();
+  State<InformationCardView> createState() => _InformationCardViewState();
 }
 
-class _InformationCardState extends State<InformationCard>
+class _InformationCardViewState extends State<InformationCardView>
     with TickerProviderStateMixin {
   late final TabController _tabController;
 
@@ -43,9 +43,9 @@ class _InformationCardState extends State<InformationCard>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          BasicInfo(),
-          Health(),
+        children: [
+          BasicInfoWidget(),
+          HealthWidget(),
         ],
       ),
     );

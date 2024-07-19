@@ -1,59 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pet_safety/presentations/information_card/form_views/text_form.dart';
+import 'package:pet_safety/services/information_card_service.dart';
 
-class BasicInfo extends StatefulWidget {
-  const BasicInfo({super.key});
-
-  @override
-  State<BasicInfo> createState() => _BasicInfoState();
-}
-
-class _BasicInfoState extends State<BasicInfo> {
-  final data = [
-    {'name': 'ベル'},
-    {'gender': 'メス・避妊済'},
-    {'species': 'ラガマフィン'},
-    {'coatColor': 'ブラウンタビーアンドホワイト'},
-    {'microchipNumber': 'XXXXX'},
-    {'dogLicenseNumber': 'XXXXX'},
-    {'weight': '4.2kg'},
-    {'characteristics': '鼻の近くにそばかす'},
-    {'temper': '人懐っこいが臆病'},
-    {'medicalHistory': ''},
-    {'medicationStatus': ''},
-    {'hospital': ''},
-    {'hospitalPhone': ''},
-  ];
-
-  final Map<String, String> titleMap = {
-    'name': '名前',
-    'gender': '性別',
-    'species': '種類',
-    'coatColor': '毛色',
-    'microchipNumber': 'マイクロチップ番号',
-    'dogLicenseNumber': '犬の登録番号',
-    'weight': '体重',
-    'characteristics': '特徴',
-    'temper': '性格',
-    'medicalHistory': '病歴',
-    'medicationStatus': '服薬状況',
-    'hospital': 'かかりつけ病院',
-    'hospitalPhone': 'かかりつけ病院電話番号',
-  };
+class BasicInfoWidget extends ConsumerWidget {
+  const BasicInfoWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView.builder(
-            shrinkWrap: true,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(informationCardServiceProvider);
+
+    return state.when(
+        data: (data) {
+          return Scaffold(
+              body: ListView.builder(
             itemBuilder: (context, index) {
-              final key = data[index].keys.first;
-              final value = data[index].values.first;
-
               return ListTile(
-                title: Text(titleMap[key]!),
-                trailing: Text(value),
+                title: Text(data.rows[index].title),
+                trailing: Text(data.rows[index].trailing),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TextForm()));
+                },
               );
             },
-            itemCount: data.length));
+            itemCount: data.rows.length,
+          ));
+        },
+        error: (error, stackTrace) {
+          return Text(error.toString());
+        },
+        loading: () => const CircularProgressIndicator());
   }
 }

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Health extends StatefulWidget {
-  const Health({super.key});
+class HealthWidget extends ConsumerWidget {
+  HealthWidget({super.key});
 
-  @override
-  State<Health> createState() => _HealthState();
-}
-
-class _HealthState extends State<Health> {
   final data = [
     {'when': '2024-01-01'},
     {'what': "3種混合ワクチン"},
@@ -22,7 +18,7 @@ class _HealthState extends State<Health> {
   };
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
         body: ListView.builder(
             shrinkWrap: true,

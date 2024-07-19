@@ -31,7 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(_title.elementAt(_selectedIndex)),
           ),
           body: [
-            const InformationCard(),
+            const InformationCardView(),
             const NeedsChecklistView(),
           ].elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(

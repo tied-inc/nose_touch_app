@@ -119,13 +119,12 @@ class ChecklistRepo extends _$ChecklistRepo implements IChecklistRepo {
   }
 
   @override
-  Future<NeedsChecklist> getItems() {
+  Future<NeedsChecklist> getItems() async {
     final database = ref.read(databaseProvider);
 
-    return (database.select(database.checklistItems)
-          ..orderBy([(t) => OrderingTerm(expression: t.id)]))
-        .get()
-        .then((items) => NeedsChecklist.fromModel(items));
+    final items = database.select(database.checklistItems)
+      ..orderBy([(t) => OrderingTerm(expression: t.id)]);
+    return NeedsChecklist.fromModel(await items.get());
   }
 
   @override

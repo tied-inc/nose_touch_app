@@ -6,12 +6,12 @@ part of 'pet.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$petRepoHash() => r'123d6ff72760176ed862b6f684d807542faeb07e';
+String _$petRepoHash() => r'02053c66355d9c381e68ffb27c70d8eb745c440a';
 
 /// See also [PetRepo].
 @ProviderFor(PetRepo)
 final petRepoProvider =
-    AutoDisposeAsyncNotifierProvider<PetRepo, void>.internal(
+    AutoDisposeAsyncNotifierProvider<PetRepo, PetInfo?>.internal(
   PetRepo.new,
   name: r'petRepoProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final petRepoProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$PetRepo = AutoDisposeAsyncNotifier<void>;
+typedef _$PetRepo = AutoDisposeAsyncNotifier<PetInfo?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

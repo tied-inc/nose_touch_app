@@ -7,7 +7,7 @@ part of 'needs_checklist_service.dart';
 // **************************************************************************
 
 String _$needsChecklistServiceHash() =>
-    r'dfc23313b2a97ed6854892c2052cd28ab69df9f6';
+    r'bd3a52f8d65d1e6429a48d6d1b0491c00e471bae';
 
 /// See also [NeedsChecklistService].
 @ProviderFor(NeedsChecklistService)

@@ -1,33 +1,49 @@
 import 'package:pet_safety/infra/dto/pet.dart';
 
 class PetInfo {
-  final PetBasicInfo basicInfo;
-  final PetHospitalInfo hospitalInfo;
-  final List<PetVaccination> vaccinations;
+  PetBasicInfo basicInfo;
+  PetHospitalInfo hospitalInfo;
+  List<PetVaccination> vaccinations;
 
   PetInfo({
     required this.basicInfo,
     required this.hospitalInfo,
     required this.vaccinations,
   });
+
+  static Map<String, String> getTitleMap() => {
+        'name': '名前',
+        'breed': '性別',
+        'species': '種類',
+        'color': '毛色',
+        'microchipNumber': 'マイクロチップ番号',
+        'dogRegistrationNumber': '犬の登録番号',
+        'weight': '体重',
+        'characteristics': '特徴',
+        'temper': '性格',
+        'medicalHistory': '病歴',
+        'medicalCondition': '服薬状況',
+        'hospitalName': 'かかりつけ病院',
+        'hospitalPhoneNumber': 'かかりつけ病院電話番号',
+      };
 }
 
 class PetBasicInfo {
-  final int id;
-  final String name;
-  final String species;
-  final String breed;
-  final String color;
-  final String microchipNumber;
-  final String dogRegistrationNumber;
-  final String weight;
-  final String characteristics;
-  final String temper;
+  int? id;
+  String name;
+  String species;
+  String breed;
+  String color;
+  String microchipNumber;
+  String dogRegistrationNumber;
+  String weight;
+  String characteristics;
+  String temper;
   final int createdAt;
-  final int updatedAt;
+  int updatedAt;
 
   PetBasicInfo({
-    required this.id,
+    this.id,
     required this.name,
     required this.species,
     required this.breed,
@@ -60,18 +76,18 @@ class PetBasicInfo {
 }
 
 class PetHospitalInfo {
-  final int id;
-  final int petId;
-  final String medicalHistory;
-  final String medicalCondition;
-  final String hospitalName;
-  final String hospitalPhoneNumber;
+  int? id;
+  int? petId;
+  String medicalHistory;
+  String medicalCondition;
+  String hospitalName;
+  String hospitalPhoneNumber;
   final int createdAt;
-  final int updatedAt;
+  int updatedAt;
 
   PetHospitalInfo({
-    required this.id,
-    required this.petId,
+    this.id,
+    this.petId,
     required this.medicalHistory,
     required this.medicalCondition,
     required this.hospitalName,
@@ -95,16 +111,16 @@ class PetHospitalInfo {
 }
 
 class PetVaccination {
-  final int id;
-  final int petId;
-  final String vaccinationName;
-  final String vaccinationDate;
+  int? id;
+  int? petId;
+  String vaccinationName;
+  String vaccinationDate;
   final int createdAt;
-  final int updatedAt;
+  int updatedAt;
 
   PetVaccination({
-    required this.id,
-    required this.petId,
+    this.id,
+    this.petId,
     required this.vaccinationName,
     required this.vaccinationDate,
     required this.createdAt,

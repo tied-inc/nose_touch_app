@@ -8,10 +8,11 @@ part 'pet.g.dart';
 
 @riverpod
 class PetRepo extends _$PetRepo implements IPetRepo {
-  Future<void> build() async {}
+  @override
+  Future<PetInfo?> build() async => await getPetInfo();
 
   @override
-  Future<PetInfo> getPetInfo() async {
+  Future<PetInfo?> getPetInfo() async {
     final database = ref.read(databaseProvider);
 
     final vaccinations_ = database.alias(database.vaccinations, 'vaccinations');
@@ -26,6 +27,10 @@ class PetRepo extends _$PetRepo implements IPetRepo {
       ),
     ]).get();
 
+    if (rows.isEmpty) {
+      return null;
+    }
+
     List<PetVaccination> vaccinations = [];
     rows.map((row) {
       vaccinations.add(PetVaccination.fromModel(row.readTable(vaccinations_)));
@@ -36,6 +41,43 @@ class PetRepo extends _$PetRepo implements IPetRepo {
         hospitalInfo: PetHospitalInfo.fromModel(
             rows.first.readTable(database.hospitalInfos)),
         vaccinations: vaccinations);
+  }
+
+  PetInfo getDefaultPetInfo() {
+    return PetInfo(
+      basicInfo: PetBasicInfo(
+        id: 1,
+        name: 'Pet Name',
+        species: 'Species',
+        breed: 'Breed',
+        color: 'Color',
+        microchipNumber: 'Microchip Number',
+        dogRegistrationNumber: 'Dog Registration Number',
+        weight: 'Weight',
+        characteristics: 'Characteristics',
+        temper: 'Temper',
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
+      ),
+      hospitalInfo: PetHospitalInfo(
+        hospitalName: 'Hospital Name',
+        hospitalPhoneNumber: 'Hospital Phone Number',
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        updatedAt: DateTime.now().millisecondsSinceEpoch,
+        medicalHistory: 'Medical History',
+        medicalCondition: 'Medical Condition',
+      ),
+      vaccinations: [
+        PetVaccination(
+          id: 1,
+          petId: 1,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          updatedAt: DateTime.now().millisecondsSinceEpoch,
+          vaccinationName: 'Vaccination Name',
+          vaccinationDate: '',
+        ),
+      ],
+    );
   }
 
   @override
