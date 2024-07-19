@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:pet_safety/domain/entities/pet_info.dart';
-import 'package:pet_safety/domain/repo/pet.dart';
-import 'package:pet_safety/infra/database.dart';
+import 'package:nose_touch/domain/entities/pet_info.dart';
+import 'package:nose_touch/domain/repo/pet.dart';
+import 'package:nose_touch/infra/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pet.g.dart';

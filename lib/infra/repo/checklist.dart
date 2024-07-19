@@ -1,7 +1,7 @@
 import 'package:drift/drift.dart';
-import 'package:pet_safety/domain/entities/needs_checklist.dart';
-import 'package:pet_safety/domain/repo/checklist.dart';
-import 'package:pet_safety/infra/database.dart';
+import 'package:nose_touch/domain/entities/needs_checklist.dart';
+import 'package:nose_touch/domain/repo/checklist.dart';
+import 'package:nose_touch/infra/database.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'checklist.g.dart';

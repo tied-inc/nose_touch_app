@@ -1,4 +1,4 @@
-import 'package:pet_safety/domain/entities/needs_checklist.dart';
+import 'package:nose_touch/domain/entities/needs_checklist.dart';
 
 abstract class IChecklistRepo {
   NeedsChecklist getDefaultItems();

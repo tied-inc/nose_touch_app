@@ -1,6 +1,6 @@
-import 'package:pet_safety/domain/entities/pet_info.dart';
-import 'package:pet_safety/infra/repo/pet.dart';
-import 'package:pet_safety/presentations/information_card/schema.dart';
+import 'package:nose_touch/domain/entities/pet_info.dart';
+import 'package:nose_touch/infra/repo/pet.dart';
+import 'package:nose_touch/presentations/information_card/schema.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'information_card_service.g.dart';

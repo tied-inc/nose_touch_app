@@ -1,4 +1,4 @@
-import 'package:pet_safety/domain/entities/pet_info.dart';
+import 'package:nose_touch/domain/entities/pet_info.dart';
 
 enum ListVariant {
   basic,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:pet_safety/services/needs_checklist_service.dart';
+import 'package:nose_touch/services/needs_checklist_service.dart';
 
 class NeedsChecklistView extends ConsumerWidget {
   const NeedsChecklistView({super.key});

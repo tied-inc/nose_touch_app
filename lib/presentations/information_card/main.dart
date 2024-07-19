@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pet_safety/presentations/information_card/basic_info.dart';
-import 'package:pet_safety/presentations/information_card/health.dart';
+import 'package:nose_touch/presentations/information_card/basic_info.dart';
+import 'package:nose_touch/presentations/information_card/health.dart';
 
 class InformationCardView extends StatefulWidget {
   const InformationCardView({super.key});

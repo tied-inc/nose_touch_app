@@ -1,4 +1,4 @@
-import 'package:pet_safety/infra/dto/pet.dart';
+import 'package:nose_touch/infra/dto/pet.dart';
 
 class PetInfo {
   PetBasicInfo basicInfo;

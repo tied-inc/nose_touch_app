@@ -1,4 +1,4 @@
-import 'package:pet_safety/infra/dto/checklist_item.dart';
+import 'package:nose_touch/infra/dto/checklist_item.dart';
 
 class NeedsChecklistItem {
   final int id;

@@ -1,5 +1,5 @@
-import 'package:pet_safety/domain/entities/needs_checklist.dart';
-import 'package:pet_safety/infra/repo/checklist.dart';
+import 'package:nose_touch/domain/entities/needs_checklist.dart';
+import 'package:nose_touch/infra/repo/checklist.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'needs_checklist_service.g.dart';
