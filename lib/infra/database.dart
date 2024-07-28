@@ -10,10 +10,6 @@ import 'package:path_provider/path_provider.dart';
 
 part 'database.g.dart';
 
-final databaseProvider = Provider<AppDatabase>((ref) {
-  return AppDatabase();
-});
-
 @UseRowClass(ChecklistItem)
 class ChecklistItems extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -105,3 +101,7 @@ LazyDatabase _openConnection() {
     return NativeDatabase(file);
   });
 }
+
+final databaseProvider = Provider<AppDatabase>((ref) {
+  return AppDatabase();
+});

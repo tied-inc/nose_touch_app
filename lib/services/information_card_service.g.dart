@@ -7,7 +7,7 @@ part of 'information_card_service.dart';
 // **************************************************************************
 
 String _$informationCardServiceHash() =>
-    r'c707ed960453363e8c2f42a4de04276a84885e68';
+    r'3b75dff25cef67c9c8babaa6a2a030d4f1e18c6d';
 
 /// See also [InformationCardService].
 @ProviderFor(InformationCardService)

@@ -73,6 +73,21 @@ class PetBasicInfo {
       updatedAt: model.updatedAt,
     );
   }
+
+  Pet toModel() => Pet(
+        id: id,
+        name: name,
+        species: species,
+        breed: breed,
+        color: color,
+        microchipNumber: microchipNumber,
+        dogRegistrationNumber: dogRegistrationNumber,
+        weight: weight,
+        characteristics: characteristics,
+        temper: temper,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }
 
 class PetHospitalInfo {
@@ -108,6 +123,16 @@ class PetHospitalInfo {
       updatedAt: model.updatedAt,
     );
   }
+
+  HospitalInfo toModel() => HospitalInfo(
+        id: id,
+        medicalHistory: medicalHistory,
+        medicalCondition: medicalCondition,
+        hospitalName: hospitalName,
+        hospitalPhoneNumber: hospitalPhoneNumber,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }
 
 class PetVaccination {
@@ -137,4 +162,13 @@ class PetVaccination {
       updatedAt: model.updatedAt,
     );
   }
+
+  Vaccination toModel() => Vaccination(
+        id: id,
+        petId: petId,
+        vaccinationName: vaccinationName,
+        vaccinationDate: vaccinationDate,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      );
 }

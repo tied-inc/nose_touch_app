@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:nose_touch/domain/entities/pet_info.dart';
 import 'package:nose_touch/domain/repo/pet.dart';
 import 'package:nose_touch/infra/database.dart';
+import 'package:nose_touch/infra/dto/pet.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'pet.g.dart';
@@ -36,17 +37,18 @@ class PetRepo extends _$PetRepo implements IPetRepo {
       vaccinations.add(PetVaccination.fromModel(row.readTable(vaccinations_)));
     });
 
+    final firstRow = rows.first;
+
     return PetInfo(
-        basicInfo: PetBasicInfo.fromModel(rows.first.readTable(database.pets)),
+        basicInfo: PetBasicInfo.fromModel(firstRow.readTable(database.pets)),
         hospitalInfo: PetHospitalInfo.fromModel(
-            rows.first.readTable(database.hospitalInfos)),
+            firstRow.readTable(database.hospitalInfos)),
         vaccinations: vaccinations);
   }
 
   PetInfo getDefaultPetInfo() {
     return PetInfo(
       basicInfo: PetBasicInfo(
-        id: 1,
         name: 'Pet Name',
         species: 'Species',
         breed: 'Breed',
@@ -60,17 +62,15 @@ class PetRepo extends _$PetRepo implements IPetRepo {
         updatedAt: DateTime.now().millisecondsSinceEpoch,
       ),
       hospitalInfo: PetHospitalInfo(
-        hospitalName: 'Hospital Name',
-        hospitalPhoneNumber: 'Hospital Phone Number',
+        hospitalName: '病院名',
+        hospitalPhoneNumber: '電話番号',
         createdAt: DateTime.now().millisecondsSinceEpoch,
         updatedAt: DateTime.now().millisecondsSinceEpoch,
-        medicalHistory: 'Medical History',
-        medicalCondition: 'Medical Condition',
+        medicalHistory: '',
+        medicalCondition: '',
       ),
       vaccinations: [
         PetVaccination(
-          id: 1,
-          petId: 1,
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch,
           vaccinationName: 'Vaccination Name',
@@ -81,7 +81,24 @@ class PetRepo extends _$PetRepo implements IPetRepo {
   }
 
   @override
-  Future<void> updatePet(PetInfo petInfo) async {
+  Future<void> upsertPetInfo(PetInfo petInfo) async {
     final database = ref.read(databaseProvider);
+
+    final pets = database.pets;
+    final hospitalInfos = database.hospitalInfos;
+    final vaccinations = database.vaccinations;
+
+    await database.transaction(() async {
+      await database.into(pets).insertOnConflictUpdate(
+          petInfo.basicInfo.toModel() as Insertable<Pet>);
+      await database.into(hospitalInfos).insertOnConflictUpdate(
+          petInfo.hospitalInfo.toModel() as Insertable<HospitalInfo>);
+      await database.batch((b) {
+        for (var v in petInfo.vaccinations) {
+          b.insertAllOnConflictUpdate(
+              vaccinations, v.toModel() as Iterable<Insertable<Vaccination>>);
+        }
+      });
+    });
   }
 }

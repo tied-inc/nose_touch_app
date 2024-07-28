@@ -44,7 +44,7 @@ class _InformationCardViewState extends State<InformationCardView>
       body: TabBarView(
         controller: _tabController,
         children: [
-          BasicInfoWidget(),
+          const BasicInfoWidget(),
           HealthWidget(),
         ],
       ),

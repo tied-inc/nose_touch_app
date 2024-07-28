@@ -1,5 +1,5 @@
 class Pet {
-  final int id;
+  int? id;
   final String name;
   final String species;
   final String breed;
@@ -13,7 +13,7 @@ class Pet {
   final int updatedAt;
 
   Pet({
-    required this.id,
+    this.id,
     required this.name,
     required this.species,
     required this.breed,
@@ -29,8 +29,8 @@ class Pet {
 }
 
 class HospitalInfo {
-  final int id;
-  final int petId;
+  int? id;
+  int? petId;
   final String medicalHistory;
   final String medicalCondition;
   final String hospitalName;
@@ -39,8 +39,8 @@ class HospitalInfo {
   final int updatedAt;
 
   HospitalInfo({
-    required this.id,
-    required this.petId,
+    this.id,
+    this.petId,
     required this.medicalHistory,
     required this.medicalCondition,
     required this.hospitalName,
@@ -51,16 +51,16 @@ class HospitalInfo {
 }
 
 class Vaccination {
-  final int id;
-  final int petId;
+  int? id;
+  int? petId;
   final String vaccinationName;
   final String vaccinationDate;
   final int createdAt;
   final int updatedAt;
 
   Vaccination({
-    required this.id,
-    required this.petId,
+    this.id,
+    this.petId,
     required this.vaccinationName,
     required this.vaccinationDate,
     required this.createdAt,
