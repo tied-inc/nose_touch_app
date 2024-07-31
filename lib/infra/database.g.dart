@@ -349,6 +349,42 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant(''));
+  static const VerificationMeta _medicalHistoryMeta =
+      const VerificationMeta('medicalHistory');
+  @override
+  late final GeneratedColumn<String> medicalHistory = GeneratedColumn<String>(
+      'medical_history', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 200),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _medicalConditionMeta =
+      const VerificationMeta('medicalCondition');
+  @override
+  late final GeneratedColumn<String> medicalCondition = GeneratedColumn<String>(
+      'medical_condition', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 200),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _hospitalNameMeta =
+      const VerificationMeta('hospitalName');
+  @override
+  late final GeneratedColumn<String> hospitalName = GeneratedColumn<String>(
+      'hospital_name', aliasedName, false,
+      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 100),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  static const VerificationMeta _hospitalPhoneNumberMeta =
+      const VerificationMeta('hospitalPhoneNumber');
+  @override
+  late final GeneratedColumn<String> hospitalPhoneNumber =
+      GeneratedColumn<String>('hospital_phone_number', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 50),
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          defaultValue: const Constant(''));
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -373,6 +409,10 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
         weight,
         characteristics,
         temper,
+        medicalHistory,
+        medicalCondition,
+        hospitalName,
+        hospitalPhoneNumber,
         createdAt,
         updatedAt
       ];
@@ -431,328 +471,6 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
       context.handle(_temperMeta,
           temper.isAcceptableOrUnknown(data['temper']!, _temperMeta));
     }
-    if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
-    } else if (isInserting) {
-      context.missing(_createdAtMeta);
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(_updatedAtMeta,
-          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
-    } else if (isInserting) {
-      context.missing(_updatedAtMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Pet map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Pet(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      species: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}species'])!,
-      breed: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}breed'])!,
-      color: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}color'])!,
-      microchipNumber: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}microchip_number'])!,
-      dogRegistrationNumber: attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}dog_registration_number'])!,
-      weight: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}weight'])!,
-      characteristics: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}characteristics'])!,
-      temper: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}temper'])!,
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}created_at'])!,
-      updatedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}updated_at'])!,
-    );
-  }
-
-  @override
-  $PetsTable createAlias(String alias) {
-    return $PetsTable(attachedDatabase, alias);
-  }
-}
-
-class PetsCompanion extends UpdateCompanion<Pet> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<String> species;
-  final Value<String> breed;
-  final Value<String> color;
-  final Value<String> microchipNumber;
-  final Value<String> dogRegistrationNumber;
-  final Value<String> weight;
-  final Value<String> characteristics;
-  final Value<String> temper;
-  final Value<int> createdAt;
-  final Value<int> updatedAt;
-  const PetsCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.species = const Value.absent(),
-    this.breed = const Value.absent(),
-    this.color = const Value.absent(),
-    this.microchipNumber = const Value.absent(),
-    this.dogRegistrationNumber = const Value.absent(),
-    this.weight = const Value.absent(),
-    this.characteristics = const Value.absent(),
-    this.temper = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-  });
-  PetsCompanion.insert({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.species = const Value.absent(),
-    this.breed = const Value.absent(),
-    this.color = const Value.absent(),
-    this.microchipNumber = const Value.absent(),
-    this.dogRegistrationNumber = const Value.absent(),
-    this.weight = const Value.absent(),
-    this.characteristics = const Value.absent(),
-    this.temper = const Value.absent(),
-    required int createdAt,
-    required int updatedAt,
-  })  : createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
-  static Insertable<Pet> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-    Expression<String>? species,
-    Expression<String>? breed,
-    Expression<String>? color,
-    Expression<String>? microchipNumber,
-    Expression<String>? dogRegistrationNumber,
-    Expression<String>? weight,
-    Expression<String>? characteristics,
-    Expression<String>? temper,
-    Expression<int>? createdAt,
-    Expression<int>? updatedAt,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (species != null) 'species': species,
-      if (breed != null) 'breed': breed,
-      if (color != null) 'color': color,
-      if (microchipNumber != null) 'microchip_number': microchipNumber,
-      if (dogRegistrationNumber != null)
-        'dog_registration_number': dogRegistrationNumber,
-      if (weight != null) 'weight': weight,
-      if (characteristics != null) 'characteristics': characteristics,
-      if (temper != null) 'temper': temper,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-    });
-  }
-
-  PetsCompanion copyWith(
-      {Value<int>? id,
-      Value<String>? name,
-      Value<String>? species,
-      Value<String>? breed,
-      Value<String>? color,
-      Value<String>? microchipNumber,
-      Value<String>? dogRegistrationNumber,
-      Value<String>? weight,
-      Value<String>? characteristics,
-      Value<String>? temper,
-      Value<int>? createdAt,
-      Value<int>? updatedAt}) {
-    return PetsCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      species: species ?? this.species,
-      breed: breed ?? this.breed,
-      color: color ?? this.color,
-      microchipNumber: microchipNumber ?? this.microchipNumber,
-      dogRegistrationNumber:
-          dogRegistrationNumber ?? this.dogRegistrationNumber,
-      weight: weight ?? this.weight,
-      characteristics: characteristics ?? this.characteristics,
-      temper: temper ?? this.temper,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (species.present) {
-      map['species'] = Variable<String>(species.value);
-    }
-    if (breed.present) {
-      map['breed'] = Variable<String>(breed.value);
-    }
-    if (color.present) {
-      map['color'] = Variable<String>(color.value);
-    }
-    if (microchipNumber.present) {
-      map['microchip_number'] = Variable<String>(microchipNumber.value);
-    }
-    if (dogRegistrationNumber.present) {
-      map['dog_registration_number'] =
-          Variable<String>(dogRegistrationNumber.value);
-    }
-    if (weight.present) {
-      map['weight'] = Variable<String>(weight.value);
-    }
-    if (characteristics.present) {
-      map['characteristics'] = Variable<String>(characteristics.value);
-    }
-    if (temper.present) {
-      map['temper'] = Variable<String>(temper.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<int>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<int>(updatedAt.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('PetsCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('species: $species, ')
-          ..write('breed: $breed, ')
-          ..write('color: $color, ')
-          ..write('microchipNumber: $microchipNumber, ')
-          ..write('dogRegistrationNumber: $dogRegistrationNumber, ')
-          ..write('weight: $weight, ')
-          ..write('characteristics: $characteristics, ')
-          ..write('temper: $temper, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $HospitalInfosTable extends HospitalInfos
-    with TableInfo<$HospitalInfosTable, HospitalInfo> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $HospitalInfosTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
-  static const VerificationMeta _petIdMeta = const VerificationMeta('petId');
-  @override
-  late final GeneratedColumn<int> petId = GeneratedColumn<int>(
-      'pet_id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('REFERENCES pets (id)'));
-  static const VerificationMeta _medicalHistoryMeta =
-      const VerificationMeta('medicalHistory');
-  @override
-  late final GeneratedColumn<String> medicalHistory = GeneratedColumn<String>(
-      'medical_history', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 200),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(''));
-  static const VerificationMeta _medicalConditionMeta =
-      const VerificationMeta('medicalCondition');
-  @override
-  late final GeneratedColumn<String> medicalCondition = GeneratedColumn<String>(
-      'medical_condition', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 200),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(''));
-  static const VerificationMeta _hospitalNameMeta =
-      const VerificationMeta('hospitalName');
-  @override
-  late final GeneratedColumn<String> hospitalName = GeneratedColumn<String>(
-      'hospital_name', aliasedName, false,
-      additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 100),
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(''));
-  static const VerificationMeta _hospitalPhoneNumberMeta =
-      const VerificationMeta('hospitalPhoneNumber');
-  @override
-  late final GeneratedColumn<String> hospitalPhoneNumber =
-      GeneratedColumn<String>('hospital_phone_number', aliasedName, false,
-          additionalChecks: GeneratedColumn.checkTextLength(maxTextLength: 50),
-          type: DriftSqlType.string,
-          requiredDuringInsert: false,
-          defaultValue: const Constant(''));
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
-  @override
-  late final GeneratedColumn<int> createdAt = GeneratedColumn<int>(
-      'created_at', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  static const VerificationMeta _updatedAtMeta =
-      const VerificationMeta('updatedAt');
-  @override
-  late final GeneratedColumn<int> updatedAt = GeneratedColumn<int>(
-      'updated_at', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
-  @override
-  List<GeneratedColumn> get $columns => [
-        id,
-        petId,
-        medicalHistory,
-        medicalCondition,
-        hospitalName,
-        hospitalPhoneNumber,
-        createdAt,
-        updatedAt
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'hospital_infos';
-  @override
-  VerificationContext validateIntegrity(Insertable<HospitalInfo> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('pet_id')) {
-      context.handle(
-          _petIdMeta, petId.isAcceptableOrUnknown(data['pet_id']!, _petIdMeta));
-    } else if (isInserting) {
-      context.missing(_petIdMeta);
-    }
     if (data.containsKey('medical_history')) {
       context.handle(
           _medicalHistoryMeta,
@@ -795,13 +513,30 @@ class $HospitalInfosTable extends HospitalInfos
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  HospitalInfo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Pet map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return HospitalInfo(
+    return Pet(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-      petId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}pet_id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      species: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}species'])!,
+      breed: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}breed'])!,
+      color: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}color'])!,
+      microchipNumber: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}microchip_number'])!,
+      dogRegistrationNumber: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}dog_registration_number'])!,
+      weight: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}weight'])!,
+      characteristics: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}characteristics'])!,
+      temper: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}temper'])!,
       medicalHistory: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}medical_history'])!,
       medicalCondition: attachedDatabase.typeMapping.read(
@@ -819,23 +554,39 @@ class $HospitalInfosTable extends HospitalInfos
   }
 
   @override
-  $HospitalInfosTable createAlias(String alias) {
-    return $HospitalInfosTable(attachedDatabase, alias);
+  $PetsTable createAlias(String alias) {
+    return $PetsTable(attachedDatabase, alias);
   }
 }
 
-class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
+class PetsCompanion extends UpdateCompanion<Pet> {
   final Value<int> id;
-  final Value<int> petId;
+  final Value<String> name;
+  final Value<String> species;
+  final Value<String> breed;
+  final Value<String> color;
+  final Value<String> microchipNumber;
+  final Value<String> dogRegistrationNumber;
+  final Value<String> weight;
+  final Value<String> characteristics;
+  final Value<String> temper;
   final Value<String> medicalHistory;
   final Value<String> medicalCondition;
   final Value<String> hospitalName;
   final Value<String> hospitalPhoneNumber;
   final Value<int> createdAt;
   final Value<int> updatedAt;
-  const HospitalInfosCompanion({
+  const PetsCompanion({
     this.id = const Value.absent(),
-    this.petId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.species = const Value.absent(),
+    this.breed = const Value.absent(),
+    this.color = const Value.absent(),
+    this.microchipNumber = const Value.absent(),
+    this.dogRegistrationNumber = const Value.absent(),
+    this.weight = const Value.absent(),
+    this.characteristics = const Value.absent(),
+    this.temper = const Value.absent(),
     this.medicalHistory = const Value.absent(),
     this.medicalCondition = const Value.absent(),
     this.hospitalName = const Value.absent(),
@@ -843,21 +594,36 @@ class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
   });
-  HospitalInfosCompanion.insert({
+  PetsCompanion.insert({
     this.id = const Value.absent(),
-    required int petId,
+    this.name = const Value.absent(),
+    this.species = const Value.absent(),
+    this.breed = const Value.absent(),
+    this.color = const Value.absent(),
+    this.microchipNumber = const Value.absent(),
+    this.dogRegistrationNumber = const Value.absent(),
+    this.weight = const Value.absent(),
+    this.characteristics = const Value.absent(),
+    this.temper = const Value.absent(),
     this.medicalHistory = const Value.absent(),
     this.medicalCondition = const Value.absent(),
     this.hospitalName = const Value.absent(),
     this.hospitalPhoneNumber = const Value.absent(),
     required int createdAt,
     required int updatedAt,
-  })  : petId = Value(petId),
-        createdAt = Value(createdAt),
+  })  : createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
-  static Insertable<HospitalInfo> custom({
+  static Insertable<Pet> custom({
     Expression<int>? id,
-    Expression<int>? petId,
+    Expression<String>? name,
+    Expression<String>? species,
+    Expression<String>? breed,
+    Expression<String>? color,
+    Expression<String>? microchipNumber,
+    Expression<String>? dogRegistrationNumber,
+    Expression<String>? weight,
+    Expression<String>? characteristics,
+    Expression<String>? temper,
     Expression<String>? medicalHistory,
     Expression<String>? medicalCondition,
     Expression<String>? hospitalName,
@@ -867,7 +633,16 @@ class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (petId != null) 'pet_id': petId,
+      if (name != null) 'name': name,
+      if (species != null) 'species': species,
+      if (breed != null) 'breed': breed,
+      if (color != null) 'color': color,
+      if (microchipNumber != null) 'microchip_number': microchipNumber,
+      if (dogRegistrationNumber != null)
+        'dog_registration_number': dogRegistrationNumber,
+      if (weight != null) 'weight': weight,
+      if (characteristics != null) 'characteristics': characteristics,
+      if (temper != null) 'temper': temper,
       if (medicalHistory != null) 'medical_history': medicalHistory,
       if (medicalCondition != null) 'medical_condition': medicalCondition,
       if (hospitalName != null) 'hospital_name': hospitalName,
@@ -878,18 +653,35 @@ class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
     });
   }
 
-  HospitalInfosCompanion copyWith(
+  PetsCompanion copyWith(
       {Value<int>? id,
-      Value<int>? petId,
+      Value<String>? name,
+      Value<String>? species,
+      Value<String>? breed,
+      Value<String>? color,
+      Value<String>? microchipNumber,
+      Value<String>? dogRegistrationNumber,
+      Value<String>? weight,
+      Value<String>? characteristics,
+      Value<String>? temper,
       Value<String>? medicalHistory,
       Value<String>? medicalCondition,
       Value<String>? hospitalName,
       Value<String>? hospitalPhoneNumber,
       Value<int>? createdAt,
       Value<int>? updatedAt}) {
-    return HospitalInfosCompanion(
+    return PetsCompanion(
       id: id ?? this.id,
-      petId: petId ?? this.petId,
+      name: name ?? this.name,
+      species: species ?? this.species,
+      breed: breed ?? this.breed,
+      color: color ?? this.color,
+      microchipNumber: microchipNumber ?? this.microchipNumber,
+      dogRegistrationNumber:
+          dogRegistrationNumber ?? this.dogRegistrationNumber,
+      weight: weight ?? this.weight,
+      characteristics: characteristics ?? this.characteristics,
+      temper: temper ?? this.temper,
       medicalHistory: medicalHistory ?? this.medicalHistory,
       medicalCondition: medicalCondition ?? this.medicalCondition,
       hospitalName: hospitalName ?? this.hospitalName,
@@ -905,8 +697,33 @@ class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (petId.present) {
-      map['pet_id'] = Variable<int>(petId.value);
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (species.present) {
+      map['species'] = Variable<String>(species.value);
+    }
+    if (breed.present) {
+      map['breed'] = Variable<String>(breed.value);
+    }
+    if (color.present) {
+      map['color'] = Variable<String>(color.value);
+    }
+    if (microchipNumber.present) {
+      map['microchip_number'] = Variable<String>(microchipNumber.value);
+    }
+    if (dogRegistrationNumber.present) {
+      map['dog_registration_number'] =
+          Variable<String>(dogRegistrationNumber.value);
+    }
+    if (weight.present) {
+      map['weight'] = Variable<String>(weight.value);
+    }
+    if (characteristics.present) {
+      map['characteristics'] = Variable<String>(characteristics.value);
+    }
+    if (temper.present) {
+      map['temper'] = Variable<String>(temper.value);
     }
     if (medicalHistory.present) {
       map['medical_history'] = Variable<String>(medicalHistory.value);
@@ -932,9 +749,17 @@ class HospitalInfosCompanion extends UpdateCompanion<HospitalInfo> {
 
   @override
   String toString() {
-    return (StringBuffer('HospitalInfosCompanion(')
+    return (StringBuffer('PetsCompanion(')
           ..write('id: $id, ')
-          ..write('petId: $petId, ')
+          ..write('name: $name, ')
+          ..write('species: $species, ')
+          ..write('breed: $breed, ')
+          ..write('color: $color, ')
+          ..write('microchipNumber: $microchipNumber, ')
+          ..write('dogRegistrationNumber: $dogRegistrationNumber, ')
+          ..write('weight: $weight, ')
+          ..write('characteristics: $characteristics, ')
+          ..write('temper: $temper, ')
           ..write('medicalHistory: $medicalHistory, ')
           ..write('medicalCondition: $medicalCondition, ')
           ..write('hospitalName: $hospitalName, ')
@@ -1178,14 +1003,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ChecklistItemsTable checklistItems = $ChecklistItemsTable(this);
   late final $PetsTable pets = $PetsTable(this);
-  late final $HospitalInfosTable hospitalInfos = $HospitalInfosTable(this);
   late final $VaccinationsTable vaccinations = $VaccinationsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [checklistItems, pets, hospitalInfos, vaccinations];
+      [checklistItems, pets, vaccinations];
 }
 
 typedef $$ChecklistItemsTableCreateCompanionBuilder = ChecklistItemsCompanion
@@ -1354,6 +1178,10 @@ typedef $$PetsTableCreateCompanionBuilder = PetsCompanion Function({
   Value<String> weight,
   Value<String> characteristics,
   Value<String> temper,
+  Value<String> medicalHistory,
+  Value<String> medicalCondition,
+  Value<String> hospitalName,
+  Value<String> hospitalPhoneNumber,
   required int createdAt,
   required int updatedAt,
 });
@@ -1368,6 +1196,10 @@ typedef $$PetsTableUpdateCompanionBuilder = PetsCompanion Function({
   Value<String> weight,
   Value<String> characteristics,
   Value<String> temper,
+  Value<String> medicalHistory,
+  Value<String> medicalCondition,
+  Value<String> hospitalName,
+  Value<String> hospitalPhoneNumber,
   Value<int> createdAt,
   Value<int> updatedAt,
 });
@@ -1399,6 +1231,10 @@ class $$PetsTableTableManager extends RootTableManager<
             Value<String> weight = const Value.absent(),
             Value<String> characteristics = const Value.absent(),
             Value<String> temper = const Value.absent(),
+            Value<String> medicalHistory = const Value.absent(),
+            Value<String> medicalCondition = const Value.absent(),
+            Value<String> hospitalName = const Value.absent(),
+            Value<String> hospitalPhoneNumber = const Value.absent(),
             Value<int> createdAt = const Value.absent(),
             Value<int> updatedAt = const Value.absent(),
           }) =>
@@ -1413,6 +1249,10 @@ class $$PetsTableTableManager extends RootTableManager<
             weight: weight,
             characteristics: characteristics,
             temper: temper,
+            medicalHistory: medicalHistory,
+            medicalCondition: medicalCondition,
+            hospitalName: hospitalName,
+            hospitalPhoneNumber: hospitalPhoneNumber,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),
@@ -1427,6 +1267,10 @@ class $$PetsTableTableManager extends RootTableManager<
             Value<String> weight = const Value.absent(),
             Value<String> characteristics = const Value.absent(),
             Value<String> temper = const Value.absent(),
+            Value<String> medicalHistory = const Value.absent(),
+            Value<String> medicalCondition = const Value.absent(),
+            Value<String> hospitalName = const Value.absent(),
+            Value<String> hospitalPhoneNumber = const Value.absent(),
             required int createdAt,
             required int updatedAt,
           }) =>
@@ -1441,6 +1285,10 @@ class $$PetsTableTableManager extends RootTableManager<
             weight: weight,
             characteristics: characteristics,
             temper: temper,
+            medicalHistory: medicalHistory,
+            medicalCondition: medicalCondition,
+            hospitalName: hospitalName,
+            hospitalPhoneNumber: hospitalPhoneNumber,
             createdAt: createdAt,
             updatedAt: updatedAt,
           ),
@@ -1500,6 +1348,26 @@ class $$PetsTableFilterComposer
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
 
+  ColumnFilters<String> get medicalHistory => $state.composableBuilder(
+      column: $state.table.medicalHistory,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get medicalCondition => $state.composableBuilder(
+      column: $state.table.medicalCondition,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get hospitalName => $state.composableBuilder(
+      column: $state.table.hospitalName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get hospitalPhoneNumber => $state.composableBuilder(
+      column: $state.table.hospitalPhoneNumber,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
   ColumnFilters<int> get createdAt => $state.composableBuilder(
       column: $state.table.createdAt,
       builder: (column, joinBuilders) =>
@@ -1509,19 +1377,6 @@ class $$PetsTableFilterComposer
       column: $state.table.updatedAt,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ComposableFilter hospitalInfosRefs(
-      ComposableFilter Function($$HospitalInfosTableFilterComposer f) f) {
-    final $$HospitalInfosTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.hospitalInfos,
-        getReferencedColumn: (t) => t.petId,
-        builder: (joinBuilder, parentComposers) =>
-            $$HospitalInfosTableFilterComposer(ComposerState($state.db,
-                $state.db.hospitalInfos, joinBuilder, parentComposers)));
-    return f(composer);
-  }
 
   ComposableFilter vaccinationsRefs(
       ComposableFilter Function($$VaccinationsTableFilterComposer f) f) {
@@ -1590,158 +1445,6 @@ class $$PetsTableOrderingComposer
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
 
-  ColumnOrderings<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
-typedef $$HospitalInfosTableCreateCompanionBuilder = HospitalInfosCompanion
-    Function({
-  Value<int> id,
-  required int petId,
-  Value<String> medicalHistory,
-  Value<String> medicalCondition,
-  Value<String> hospitalName,
-  Value<String> hospitalPhoneNumber,
-  required int createdAt,
-  required int updatedAt,
-});
-typedef $$HospitalInfosTableUpdateCompanionBuilder = HospitalInfosCompanion
-    Function({
-  Value<int> id,
-  Value<int> petId,
-  Value<String> medicalHistory,
-  Value<String> medicalCondition,
-  Value<String> hospitalName,
-  Value<String> hospitalPhoneNumber,
-  Value<int> createdAt,
-  Value<int> updatedAt,
-});
-
-class $$HospitalInfosTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $HospitalInfosTable,
-    HospitalInfo,
-    $$HospitalInfosTableFilterComposer,
-    $$HospitalInfosTableOrderingComposer,
-    $$HospitalInfosTableCreateCompanionBuilder,
-    $$HospitalInfosTableUpdateCompanionBuilder> {
-  $$HospitalInfosTableTableManager(_$AppDatabase db, $HospitalInfosTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$HospitalInfosTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$HospitalInfosTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> petId = const Value.absent(),
-            Value<String> medicalHistory = const Value.absent(),
-            Value<String> medicalCondition = const Value.absent(),
-            Value<String> hospitalName = const Value.absent(),
-            Value<String> hospitalPhoneNumber = const Value.absent(),
-            Value<int> createdAt = const Value.absent(),
-            Value<int> updatedAt = const Value.absent(),
-          }) =>
-              HospitalInfosCompanion(
-            id: id,
-            petId: petId,
-            medicalHistory: medicalHistory,
-            medicalCondition: medicalCondition,
-            hospitalName: hospitalName,
-            hospitalPhoneNumber: hospitalPhoneNumber,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int petId,
-            Value<String> medicalHistory = const Value.absent(),
-            Value<String> medicalCondition = const Value.absent(),
-            Value<String> hospitalName = const Value.absent(),
-            Value<String> hospitalPhoneNumber = const Value.absent(),
-            required int createdAt,
-            required int updatedAt,
-          }) =>
-              HospitalInfosCompanion.insert(
-            id: id,
-            petId: petId,
-            medicalHistory: medicalHistory,
-            medicalCondition: medicalCondition,
-            hospitalName: hospitalName,
-            hospitalPhoneNumber: hospitalPhoneNumber,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-        ));
-}
-
-class $$HospitalInfosTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $HospitalInfosTable> {
-  $$HospitalInfosTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get medicalHistory => $state.composableBuilder(
-      column: $state.table.medicalHistory,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get medicalCondition => $state.composableBuilder(
-      column: $state.table.medicalCondition,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get hospitalName => $state.composableBuilder(
-      column: $state.table.hospitalName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get hospitalPhoneNumber => $state.composableBuilder(
-      column: $state.table.hospitalPhoneNumber,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  $$PetsTableFilterComposer get petId {
-    final $$PetsTableFilterComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.petId,
-        referencedTable: $state.db.pets,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$PetsTableFilterComposer(
-            ComposerState(
-                $state.db, $state.db.pets, joinBuilder, parentComposers)));
-    return composer;
-  }
-}
-
-class $$HospitalInfosTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $HospitalInfosTable> {
-  $$HospitalInfosTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
   ColumnOrderings<String> get medicalHistory => $state.composableBuilder(
       column: $state.table.medicalHistory,
       builder: (column, joinBuilders) =>
@@ -1771,18 +1474,6 @@ class $$HospitalInfosTableOrderingComposer
       column: $state.table.updatedAt,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  $$PetsTableOrderingComposer get petId {
-    final $$PetsTableOrderingComposer composer = $state.composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.petId,
-        referencedTable: $state.db.pets,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$PetsTableOrderingComposer(
-            ComposerState(
-                $state.db, $state.db.pets, joinBuilder, parentComposers)));
-    return composer;
-  }
 }
 
 typedef $$VaccinationsTableCreateCompanionBuilder = VaccinationsCompanion
@@ -1943,8 +1634,6 @@ class $AppDatabaseManager {
   $$ChecklistItemsTableTableManager get checklistItems =>
       $$ChecklistItemsTableTableManager(_db, _db.checklistItems);
   $$PetsTableTableManager get pets => $$PetsTableTableManager(_db, _db.pets);
-  $$HospitalInfosTableTableManager get hospitalInfos =>
-      $$HospitalInfosTableTableManager(_db, _db.hospitalInfos);
   $$VaccinationsTableTableManager get vaccinations =>
       $$VaccinationsTableTableManager(_db, _db.vaccinations);
 }

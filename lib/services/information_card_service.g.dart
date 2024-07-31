@@ -7,12 +7,12 @@ part of 'information_card_service.dart';
 // **************************************************************************
 
 String _$informationCardServiceHash() =>
-    r'3b75dff25cef67c9c8babaa6a2a030d4f1e18c6d';
+    r'42ece67d05c6867302dfc628e2f7ae5d880d2166';
 
 /// See also [InformationCardService].
 @ProviderFor(InformationCardService)
 final informationCardServiceProvider = AutoDisposeAsyncNotifierProvider<
-    InformationCardService, InformationCardSchema>.internal(
+    InformationCardService, BasicInfoSchema>.internal(
   InformationCardService.new,
   name: r'informationCardServiceProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,7 +22,6 @@ final informationCardServiceProvider = AutoDisposeAsyncNotifierProvider<
   allTransitiveDependencies: null,
 );
 
-typedef _$InformationCardService
-    = AutoDisposeAsyncNotifier<InformationCardSchema>;
+typedef _$InformationCardService = AutoDisposeAsyncNotifier<BasicInfoSchema>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

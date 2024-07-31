@@ -42,14 +42,7 @@ class Pets extends Table {
       text().withLength(max: 100).withDefault(const Constant(''))();
   TextColumn get temper =>
       text().withLength(max: 100).withDefault(const Constant(''))();
-  IntColumn get createdAt => integer()();
-  IntColumn get updatedAt => integer()();
-}
 
-@UseRowClass(HospitalInfo)
-class HospitalInfos extends Table {
-  IntColumn get id => integer().autoIncrement()();
-  IntColumn get petId => integer().references(Pets, #id)();
   TextColumn get medicalHistory =>
       text().withLength(max: 200).withDefault(const Constant(''))();
   TextColumn get medicalCondition =>
@@ -58,6 +51,7 @@ class HospitalInfos extends Table {
       text().withLength(max: 100).withDefault(const Constant(''))();
   TextColumn get hospitalPhoneNumber =>
       text().withLength(max: 50).withDefault(const Constant(''))();
+
   IntColumn get createdAt => integer()();
   IntColumn get updatedAt => integer()();
 }
@@ -77,7 +71,6 @@ class Vaccinations extends Table {
 @DriftDatabase(tables: [
   ChecklistItems,
   Pets,
-  HospitalInfos,
   Vaccinations,
 ])
 class AppDatabase extends _$AppDatabase {
@@ -85,6 +78,14 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
+
+  Future<void> deleteEverything() {
+    return transaction(() async {
+      for (final table in allTables) {
+        await delete(table).go();
+      }
+    });
+  }
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

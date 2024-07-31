@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nose_touch/presentations/information_card/schema.dart';
 
 class TextForm extends StatelessWidget {
-  final BasicListTileSchema row;
+  final String label;
+  final String? initialValue;
   final void Function(String?) onSave;
 
-  const TextForm({super.key, required this.row, required this.onSave});
+  const TextForm({
+    super.key,
+    required this.label,
+    required this.initialValue,
+    required this.onSave,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +24,10 @@ class TextForm extends StatelessWidget {
               child: TextFormField(
                 decoration: InputDecoration(
                   border: const UnderlineInputBorder(),
-                  labelText: row.title,
+                  labelText: label,
                 ),
-                initialValue: row.trailing,
-                onSaved: onSave,
+                initialValue: initialValue,
+                onChanged: onSave,
               ),
             ),
           ],

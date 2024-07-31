@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nose_touch/presentations/information_card/basic_info.dart';
-import 'package:nose_touch/presentations/information_card/health.dart';
+import 'package:nose_touch/presentations/information_card/vaccine_info.dart';
 
 class InformationCardView extends StatefulWidget {
   const InformationCardView({super.key});
@@ -45,7 +45,7 @@ class _InformationCardViewState extends State<InformationCardView>
         controller: _tabController,
         children: [
           const BasicInfoWidget(),
-          HealthWidget(),
+          VaccineInfo(),
         ],
       ),
     );

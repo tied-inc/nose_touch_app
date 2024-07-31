@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HealthWidget extends ConsumerWidget {
-  HealthWidget({super.key});
+class VaccineInfo extends ConsumerWidget {
+  VaccineInfo({super.key});
 
   final data = [
     {'when': '2024-01-01'},

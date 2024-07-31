@@ -9,6 +9,10 @@ class Pet {
   final String weight;
   final String characteristics;
   final String temper;
+  final String medicalHistory;
+  final String medicalCondition;
+  final String hospitalName;
+  final String hospitalPhoneNumber;
   final int createdAt;
   final int updatedAt;
 
@@ -23,24 +27,6 @@ class Pet {
     required this.weight,
     required this.characteristics,
     required this.temper,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-}
-
-class HospitalInfo {
-  int? id;
-  int? petId;
-  final String medicalHistory;
-  final String medicalCondition;
-  final String hospitalName;
-  final String hospitalPhoneNumber;
-  final int createdAt;
-  final int updatedAt;
-
-  HospitalInfo({
-    this.id,
-    this.petId,
     required this.medicalHistory,
     required this.medicalCondition,
     required this.hospitalName,

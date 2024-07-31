@@ -3,6 +3,6 @@ import 'dart:async';
 import 'package:nose_touch/domain/entities/pet_info.dart';
 
 abstract class IPetRepo {
-  Future<PetInfo?> getPetInfo();
-  Future<void> upsertPetInfo(PetInfo petInfo);
+  Future<PetBasicInfo?> getPetBasicInfo();
+  Future<void> upsertPetBasicInfo(PetBasicInfo petInfo);
 }

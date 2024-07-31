@@ -7,14 +7,26 @@ part 'information_card_service.g.dart';
 @riverpod
 class InformationCardService extends _$InformationCardService {
   @override
-  Future<InformationCardSchema> build() async {
+  Future<BasicInfoSchema> build() async {
     final notifier = ref.read(petRepoProvider.notifier);
 
-    final ret = await notifier.getPetInfo();
+    final ret = await notifier.getPetBasicInfo();
     if (ret == null) {
       final data = notifier.getDefaultPetInfo();
-      return InformationCardSchema.fromEntity(data);
+      return BasicInfoSchema.fromEntity(data);
     }
-    return InformationCardSchema.fromEntity(ret);
+    return BasicInfoSchema.fromEntity(ret);
+  }
+
+  Future<BasicInfoSchema> upsertBasicInfo(BasicInfoSchema data) async {
+    final notifier = ref.read(petRepoProvider.notifier);
+    await notifier.upsertPetBasicInfo(data.toEntity());
+    print('called');
+
+    final newItem = await notifier.getPetBasicInfo();
+    if (newItem == null) {
+      throw Exception('Failed to get pet info');
+    }
+    return BasicInfoSchema.fromEntity(newItem);
   }
 }

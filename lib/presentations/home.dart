@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nose_touch/presentations/settings/main.dart';
 
 import 'information_card/main.dart';
 import 'needs_checklist/main.dart';
@@ -11,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static const _title = ['情報カード', 'チェックリスト'];
+  static const _title = ['情報カード', 'チェックリスト', '設定'];
 
   _MyHomePageState();
 
@@ -25,7 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
           appBar: AppBar(
             title: Text(_title.elementAt(_selectedIndex)),
@@ -33,48 +34,24 @@ class _MyHomePageState extends State<MyHomePage> {
           body: [
             const InformationCardView(),
             const NeedsChecklistView(),
+            const SettingsView(),
           ].elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.info),
-                label: '情報カード',
+                label: "情報カード",
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.checklist),
                 label: 'チェックリスト',
               ),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber[800],
             onTap: _onItemTapped,
           ),
-          drawer: _selectedIndex == 0
-              ? Drawer(
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: <Widget>[
-                      const SizedBox(
-                          height: 120,
-                          child: DrawerHeader(
-                            child: Text('ペット'),
-                          )),
-                      ListTile(
-                        title: const Text('ベル'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: const Text('ジル'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                )
-              : null,
         ));
   }
 }
