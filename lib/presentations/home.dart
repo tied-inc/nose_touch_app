@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:nose_touch/infra/database.dart';
 import 'package:nose_touch/presentations/settings/main.dart';
+import 'package:nose_touch/services/settings_service.dart';
 
 import 'information_card/main.dart';
 import 'needs_checklist/main.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  final AppDatabase database;
+
+  const MyHomePage({super.key, required this.database});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -25,6 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final settingsService = SettingsService(widget.database);
+
     return DefaultTabController(
         length: 3,
         child: Scaffold(
@@ -34,7 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
           body: [
             const InformationCardView(),
             const NeedsChecklistView(),
-            const SettingsView(),
+            SettingsView(
+              settingsService: settingsService,
+            ),
           ].elementAt(_selectedIndex),
           bottomNavigationBar: BottomNavigationBar(
             items: const [

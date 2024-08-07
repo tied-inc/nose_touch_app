@@ -2,21 +2,15 @@ import 'package:drift/drift.dart';
 import 'package:nose_touch/domain/entities/pet_info.dart';
 import 'package:nose_touch/domain/repo/pet.dart';
 import 'package:nose_touch/infra/database.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'pet.g.dart';
+class PetRepo implements IPetRepo {
+  final AppDatabase database;
 
-@riverpod
-class PetRepo extends _$PetRepo implements IPetRepo {
-  @override
-  Future<PetBasicInfo?> build() async => await getPetBasicInfo();
+  PetRepo(this.database);
 
   @override
   Future<PetBasicInfo?> getPetBasicInfo() async {
-    final database = ref.read(databaseProvider);
     final rows = await database.select(database.pets).get();
-
-    print(rows);
 
     if (rows.isEmpty) {
       return null;
@@ -43,6 +37,7 @@ class PetRepo extends _$PetRepo implements IPetRepo {
     );
   }
 
+  @override
   PetBasicInfo getDefaultPetInfo() {
     return PetBasicInfo(
       name: 'Pet Name',
@@ -65,9 +60,6 @@ class PetRepo extends _$PetRepo implements IPetRepo {
 
   @override
   Future<PetBasicInfo> upsertPetBasicInfo(PetBasicInfo petInfo) async {
-    final database = ref.read(databaseProvider);
-    print(petInfo.id);
-
     PetsCompanion companion;
     if (petInfo.id == null) {
       companion = PetsCompanion(

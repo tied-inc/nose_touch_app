@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nose_touch/infra/dto/checklist_item.dart';
 import 'package:nose_touch/infra/dto/pet.dart';
 import 'package:path/path.dart' as p;
@@ -102,7 +101,3 @@ LazyDatabase _openConnection() {
     return NativeDatabase(file);
   });
 }
-
-final databaseProvider = Provider<AppDatabase>((ref) {
-  return AppDatabase();
-});

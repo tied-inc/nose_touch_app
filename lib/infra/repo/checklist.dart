@@ -2,20 +2,11 @@ import 'package:drift/drift.dart';
 import 'package:nose_touch/domain/entities/needs_checklist.dart';
 import 'package:nose_touch/domain/repo/checklist.dart';
 import 'package:nose_touch/infra/database.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'checklist.g.dart';
+class ChecklistRepo implements IChecklistRepo {
+  final AppDatabase database;
 
-@riverpod
-class ChecklistRepo extends _$ChecklistRepo implements IChecklistRepo {
-  @override
-  Future<NeedsChecklist> build() async {
-    final records = await getItems();
-    if (records.items.isEmpty) {
-      return await createDefaultChecklist();
-    }
-    return records;
-  }
+  ChecklistRepo(this.database);
 
   @override
   NeedsChecklist getDefaultItems() {
@@ -97,8 +88,6 @@ class ChecklistRepo extends _$ChecklistRepo implements IChecklistRepo {
 
   @override
   Future<NeedsChecklist> createDefaultChecklist() async {
-    final database = ref.read(databaseProvider);
-
     final rows = getDefaultItems().items.map((item) {
       return ChecklistItemsCompanion.insert(
         id: Value(item.id),
@@ -120,8 +109,6 @@ class ChecklistRepo extends _$ChecklistRepo implements IChecklistRepo {
 
   @override
   Future<NeedsChecklist> getItems() async {
-    final database = ref.read(databaseProvider);
-
     final items = database.select(database.checklistItems)
       ..orderBy([(t) => OrderingTerm(expression: t.id)]);
     return NeedsChecklist.fromModel(await items.get());
@@ -129,8 +116,6 @@ class ChecklistRepo extends _$ChecklistRepo implements IChecklistRepo {
 
   @override
   Future<void> updateItem(NeedsChecklistItem item) async {
-    final database = ref.read(databaseProvider);
-
     await (database.update(database.checklistItems)
           ..where((t) => t.id.equals(item.id)))
         .write(ChecklistItemsCompanion(

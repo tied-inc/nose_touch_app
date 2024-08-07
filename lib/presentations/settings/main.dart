@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nose_touch/services/settings_service.dart';
 
-class SettingsView extends ConsumerWidget {
-  const SettingsView({super.key});
+class SettingsView extends StatelessWidget {
+  final SettingsService settingsService;
+
+  const SettingsView({super.key, required this.settingsService});
+
+  void handleDelete(BuildContext context) {
+    settingsService.reset().then((value) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('初期状態に戻しました')));
+      Navigator.of(context).pop();
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(settingsServiceProvider.notifier);
-
+  Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(children: [
       ListTile(
@@ -41,12 +48,7 @@ class SettingsView extends ConsumerWidget {
                         ),
                         TextButton(
                             onPressed: () {
-                              notifier.reset().then((value) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('初期状態に戻しました')));
-                                Navigator.of(context).pop();
-                              });
+                              handleDelete(context);
                             },
                             child: const Text('はい'))
                       ]);

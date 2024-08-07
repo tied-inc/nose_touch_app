@@ -1,29 +1,25 @@
-import 'package:nose_touch/infra/repo/pet.dart';
+import 'package:nose_touch/domain/repo/pet.dart';
 import 'package:nose_touch/presentations/information_card/schema.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'information_card_service.g.dart';
+class InformationCardService {
+  final IPetRepo petRepo;
 
-@riverpod
-class InformationCardService extends _$InformationCardService {
-  @override
-  Future<BasicInfoSchema> build() async {
-    final notifier = ref.read(petRepoProvider.notifier);
+  InformationCardService(this.petRepo);
 
-    final ret = await notifier.getPetBasicInfo();
+  Future<BasicInfoSchema> getBasicInfo() async {
+    final ret = await petRepo.getPetBasicInfo();
+
     if (ret == null) {
-      final data = notifier.getDefaultPetInfo();
+      final data = petRepo.getDefaultPetInfo();
       return BasicInfoSchema.fromEntity(data);
     }
     return BasicInfoSchema.fromEntity(ret);
   }
 
   Future<BasicInfoSchema> upsertBasicInfo(BasicInfoSchema data) async {
-    final notifier = ref.read(petRepoProvider.notifier);
-    await notifier.upsertPetBasicInfo(data.toEntity());
-    print('called');
+    await petRepo.upsertPetBasicInfo(data.toEntity());
 
-    final newItem = await notifier.getPetBasicInfo();
+    final newItem = await petRepo.getPetBasicInfo();
     if (newItem == null) {
       throw Exception('Failed to get pet info');
     }

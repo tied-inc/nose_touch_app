@@ -1,30 +1,21 @@
 import 'package:nose_touch/domain/entities/needs_checklist.dart';
-import 'package:nose_touch/infra/repo/checklist.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:nose_touch/domain/repo/checklist.dart';
 
-part 'needs_checklist_service.g.dart';
+class NeedsChecklistService {
+  final IChecklistRepo checklistRepo;
 
-@riverpod
-class NeedsChecklistService extends _$NeedsChecklistService {
-  @override
-  Future<NeedsChecklist> build() {
-    return showChecklist();
-  }
+  NeedsChecklistService(this.checklistRepo);
 
   Future<NeedsChecklist> showChecklist() async {
-    final notifier = ref.watch(checklistRepoProvider.notifier);
-
-    final records = await notifier.getItems();
+    final records = await checklistRepo.getItems();
     if (records.isEmpty()) {
-      return await notifier.createDefaultChecklist();
+      return await checklistRepo.createDefaultChecklist();
     }
     return records;
   }
 
   Future<void> toggleItemValue(NeedsChecklistItem item, bool value) async {
-    final notifier = ref.watch(checklistRepoProvider.notifier);
-
     final newItem = item.copyWith(value: value);
-    await notifier.updateItem(newItem);
+    await checklistRepo.updateItem(newItem);
   }
 }

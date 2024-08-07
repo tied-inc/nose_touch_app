@@ -44,6 +44,8 @@ dependencies:
   flutter_document_scanner: ^1.1.2
   drift: ^2.19.1
   drift_flutter: ^0.1.0
+  hooks_riverpod: ^2.5.1
+  flutter_hooks: ^0.20.5
 
 dev_dependencies:
   flutter_test:
