@@ -23,9 +23,7 @@ class TextForm extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: TextFormField(
                 decoration: InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  labelText: label,
-                ),
+                    border: const UnderlineInputBorder(), labelText: label),
                 initialValue: initialValue,
                 onChanged: onSave,
               ),

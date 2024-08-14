@@ -34,7 +34,9 @@ class BasicInfoWidget extends HookWidget {
       children: [
         ListTile(
           title: const Text('名前'),
-          trailing: Text(data.value?.name ?? ''),
+          trailing: Text(data.value!.name.isNotEmpty
+              ? data.value?.name ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
@@ -49,12 +51,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('種類'),
-          trailing: Text(data.value?.species ?? ''),
+          trailing: Text(data.value!.species.isNotEmpty
+              ? data.value?.species ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '種類',
-                      initialValue: data.value?.species ?? '',
+                      initialValue: data.value?.species ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(species: value);
                         service.upsertBasicInfo(data.value!);
@@ -64,12 +68,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('品種'),
-          trailing: Text(data.value?.breed ?? ''),
+          trailing: Text(data.value!.breed.isNotEmpty
+              ? data.value?.breed ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '品種',
-                      initialValue: data.value?.breed ?? '',
+                      initialValue: data.value?.breed ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(breed: value);
                         service.upsertBasicInfo(data.value!);
@@ -79,12 +85,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('色'),
-          trailing: Text(data.value?.color ?? ''),
+          trailing: Text(data.value!.color.isNotEmpty
+              ? data.value?.color ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '色',
-                      initialValue: data.value?.color ?? '',
+                      initialValue: data.value?.color ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(color: value);
                         service.upsertBasicInfo(data.value!);
@@ -94,12 +102,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('マイクロチップ番号'),
-          trailing: Text(data.value?.microchipNumber ?? ''),
+          trailing: Text(data.value!.microchipNumber.isNotEmpty
+              ? data.value?.microchipNumber ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'マイクロチップ番号',
-                      initialValue: data.value?.microchipNumber ?? '',
+                      initialValue:
+                          data.value?.microchipNumber ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(microchipNumber: value);
@@ -110,12 +121,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('犬登録番号'),
-          trailing: Text(data.value?.dogRegistrationNumber ?? ''),
+          trailing: Text(data.value!.dogRegistrationNumber.isNotEmpty
+              ? data.value?.dogRegistrationNumber ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '犬登録番号',
-                      initialValue: data.value?.dogRegistrationNumber ?? '',
+                      initialValue:
+                          data.value?.dogRegistrationNumber ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(dogRegistrationNumber: value);
@@ -126,12 +140,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('体重'),
-          trailing: Text(data.value?.weight ?? ''),
+          trailing: Text(data.value!.weight.isNotEmpty
+              ? data.value?.weight ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '体重',
-                      initialValue: data.value?.weight ?? '',
+                      initialValue: data.value?.weight ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(weight: value);
                         service.upsertBasicInfo(data.value!);
@@ -141,12 +157,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('特徴'),
-          trailing: Text(data.value?.characteristics ?? ''),
+          trailing: Text(data.value!.characteristics.isNotEmpty
+              ? data.value?.characteristics ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '特徴',
-                      initialValue: data.value?.characteristics ?? '',
+                      initialValue:
+                          data.value?.characteristics ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(characteristics: value);
@@ -157,12 +176,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('性格'),
-          trailing: Text(data.value?.temper ?? ''),
+          trailing: Text(data.value!.temper.isNotEmpty
+              ? data.value?.temper ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '性格',
-                      initialValue: data.value?.temper ?? '',
+                      initialValue: data.value?.temper ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(temper: value);
                         service.upsertBasicInfo(data.value!);
@@ -172,12 +193,14 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('かかりつけ病院'),
-          trailing: Text(data.value?.hospitalName ?? ''),
+          trailing: Text(data.value!.hospitalName.isNotEmpty
+              ? data.value?.hospitalName ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'かかりつけ病院',
-                      initialValue: data.value?.hospitalName ?? '',
+                      initialValue: data.value?.hospitalName ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(hospitalName: value);
                         service.upsertBasicInfo(data.value!);
@@ -187,12 +210,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('かかりつけ病院電話番号'),
-          trailing: Text(data.value?.hospitalPhoneNumber ?? ''),
+          trailing: Text(data.value!.hospitalPhoneNumber.isNotEmpty
+              ? data.value?.hospitalPhoneNumber ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'かかりつけ病院電話番号',
-                      initialValue: data.value?.hospitalPhoneNumber ?? '',
+                      initialValue:
+                          data.value?.hospitalPhoneNumber ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(hospitalPhoneNumber: value);
@@ -203,12 +229,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('病歴'),
-          trailing: Text(data.value?.medicalHistory ?? ''),
+          trailing: Text(data.value!.medicalHistory.isNotEmpty
+              ? data.value?.medicalHistory ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '病歴',
-                      initialValue: data.value?.medicalHistory ?? '',
+                      initialValue:
+                          data.value?.medicalHistory ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(medicalHistory: value);
@@ -219,12 +248,15 @@ class BasicInfoWidget extends HookWidget {
         ),
         ListTile(
           title: const Text('病状'),
-          trailing: Text(data.value?.medicalCondition ?? ''),
+          trailing: Text(data.value!.medicalCondition.isNotEmpty
+              ? data.value?.medicalCondition ?? ''
+              : 'タップして入力してください'),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '病状',
-                      initialValue: data.value?.medicalCondition ?? '',
+                      initialValue:
+                          data.value?.medicalCondition ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(medicalCondition: value);
