@@ -1,22 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:nose_touch/presentations/information_card/form_views/text_form.dart';
+import 'package:nose_touch/presentations/information_card/schema.dart';
 import 'package:nose_touch/services/information_card_service.dart';
 
-class BasicInfoWidget extends HookConsumerWidget {
-  const BasicInfoWidget({super.key});
+class BasicInfoWidget extends HookWidget {
+  final InformationCardService service;
+
+  const BasicInfoWidget({super.key, required this.service});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(informationCardServiceProvider.notifier);
-    final data = useState(null);
+  Widget build(BuildContext context) {
+    final data = useState<BasicInfoSchema?>(null);
 
-    notifier.getBasicInfo().then((value) {
-      data = value;
-    });
+    fetchData() async {
+      try {
+        data.value = await service.getBasicInfo();
+      } catch (e) {
+        data.value = null;
+      }
+    }
 
-    if (data == null) {
+    useEffect(() {
+      fetchData();
+      return null;
+    }, []);
+
+    if (data.value == null) {
       return const CircularProgressIndicator();
     }
 
@@ -24,197 +34,201 @@ class BasicInfoWidget extends HookConsumerWidget {
       children: [
         ListTile(
           title: const Text('名前'),
-          trailing: Text(data!.name),
+          trailing: Text(data.value?.name ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '名前',
-                      initialValue: data!.name,
+                      initialValue: data.value?.name ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(name: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(name: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('種類'),
-          trailing: Text(data!.species),
+          trailing: Text(data.value?.species ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '種類',
-                      initialValue: data!.species,
+                      initialValue: data.value?.species ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(species: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(species: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('品種'),
-          trailing: Text(data!.breed),
+          trailing: Text(data.value?.breed ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '品種',
-                      initialValue: data!.breed,
+                      initialValue: data.value?.breed ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(breed: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(breed: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('色'),
-          trailing: Text(data!.color),
+          trailing: Text(data.value?.color ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '色',
-                      initialValue: data!.color,
+                      initialValue: data.value?.color ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(color: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(color: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('マイクロチップ番号'),
-          trailing: Text(data!.microchipNumber),
+          trailing: Text(data.value?.microchipNumber ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'マイクロチップ番号',
-                      initialValue: data!.microchipNumber,
+                      initialValue: data.value?.microchipNumber ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(microchipNumber: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(microchipNumber: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('犬登録番号'),
-          trailing: Text(data!.dogRegistrationNumber),
+          trailing: Text(data.value?.dogRegistrationNumber ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '犬登録番号',
-                      initialValue: data!.dogRegistrationNumber,
+                      initialValue: data.value?.dogRegistrationNumber ?? '',
                       onSave: (value) {
-                        final petInfo =
-                            data!.copyWith(dogRegistrationNumber: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(dogRegistrationNumber: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('体重'),
-          trailing: Text(data!.weight),
+          trailing: Text(data.value?.weight ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '体重',
-                      initialValue: data!.weight,
+                      initialValue: data.value?.weight ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(weight: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(weight: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('特徴'),
-          trailing: Text(data!.characteristics),
+          trailing: Text(data.value?.characteristics ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '特徴',
-                      initialValue: data!.characteristics,
+                      initialValue: data.value?.characteristics ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(characteristics: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(characteristics: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('性格'),
-          trailing: Text(data!.temper),
+          trailing: Text(data.value?.temper ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '性格',
-                      initialValue: data!.temper,
+                      initialValue: data.value?.temper ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(temper: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(temper: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('かかりつけ病院'),
-          trailing: Text(data!.hospitalName),
+          trailing: Text(data.value?.hospitalName ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'かかりつけ病院',
-                      initialValue: data!.hospitalName,
+                      initialValue: data.value?.hospitalName ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(hospitalName: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value = data.value!.copyWith(hospitalName: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('かかりつけ病院電話番号'),
-          trailing: Text(data!.hospitalPhoneNumber),
+          trailing: Text(data.value?.hospitalPhoneNumber ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: 'かかりつけ病院電話番号',
-                      initialValue: data!.hospitalPhoneNumber,
+                      initialValue: data.value?.hospitalPhoneNumber ?? '',
                       onSave: (value) {
-                        final petInfo =
-                            data!.copyWith(hospitalPhoneNumber: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(hospitalPhoneNumber: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('病歴'),
-          trailing: Text(data!.medicalHistory),
+          trailing: Text(data.value?.medicalHistory ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '病歴',
-                      initialValue: data!.medicalHistory,
+                      initialValue: data.value?.medicalHistory ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(medicalHistory: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(medicalHistory: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },
         ),
         ListTile(
           title: const Text('病状'),
-          trailing: Text(data!.medicalCondition),
+          trailing: Text(data.value?.medicalCondition ?? ''),
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TextForm(
                       label: '病状',
-                      initialValue: data!.medicalCondition,
+                      initialValue: data.value?.medicalCondition ?? '',
                       onSave: (value) {
-                        final petInfo = data!.copyWith(medicalCondition: value);
-                        notifier.upsertBasicInfo(petInfo);
+                        data.value =
+                            data.value!.copyWith(medicalCondition: value);
+                        service.upsertBasicInfo(data.value!);
                       },
                     )));
           },

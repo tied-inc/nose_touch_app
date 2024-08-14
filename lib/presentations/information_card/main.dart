@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:nose_touch/infra/database.dart';
+import 'package:nose_touch/infra/repo/pet.dart';
 import 'package:nose_touch/presentations/information_card/basic_info.dart';
 import 'package:nose_touch/presentations/information_card/vaccine_info.dart';
+import 'package:nose_touch/services/information_card_service.dart';
 
-class InformationCardView extends StatefulWidget {
-  const InformationCardView({super.key});
+class InformationCardView extends HookWidget {
+  final AppDatabase database;
 
-  @override
-  State<InformationCardView> createState() => _InformationCardViewState();
-}
-
-class _InformationCardViewState extends State<InformationCardView>
-    with TickerProviderStateMixin {
-  late final TabController _tabController;
+  const InformationCardView({super.key, required this.database});
 
   final tabs = const [
     Tab(icon: Icon(Icons.info), text: '基本情報'),
@@ -19,32 +17,24 @@ class _InformationCardViewState extends State<InformationCardView>
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: tabs.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final tabController = useTabController(initialLength: tabs.length);
+    final petRepo = PetRepo(database);
+    final informationCardService = InformationCardService(petRepo);
+
     return Scaffold(
       appBar: AppBar(
         title: TabBar(
-            controller: _tabController,
+            controller: tabController,
             indicatorColor: Colors.grey,
             labelColor: Colors.black,
             unselectedLabelColor: Colors.grey,
             tabs: tabs),
       ),
       body: TabBarView(
-        controller: _tabController,
+        controller: tabController,
         children: [
-          const BasicInfoWidget(),
+          BasicInfoWidget(service: informationCardService),
           VaccineInfo(),
         ],
       ),

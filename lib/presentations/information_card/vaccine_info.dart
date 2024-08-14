@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
-class VaccineInfo extends ConsumerWidget {
+class VaccineInfo extends HookWidget {
   VaccineInfo({super.key});
 
   final data = [
@@ -18,7 +18,7 @@ class VaccineInfo extends ConsumerWidget {
   };
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
         body: ListView.builder(
             shrinkWrap: true,
