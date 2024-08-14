@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nose_touch/infra/database.dart';
 import 'package:nose_touch/infra/repo/pet.dart';
-import 'package:nose_touch/presentations/information_card/basic_info.dart';
-import 'package:nose_touch/presentations/information_card/vaccine_info.dart';
+import 'package:nose_touch/presentations/information_card/widgets/basic_info.dart';
+import 'package:nose_touch/presentations/information_card/widgets/vaccine_info.dart';
 import 'package:nose_touch/services/information_card_service.dart';
 
 class InformationCardView extends HookWidget {

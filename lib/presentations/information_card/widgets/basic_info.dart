@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nose_touch/presentations/information_card/form_views/text_form.dart';
 import 'package:nose_touch/presentations/information_card/schema.dart';
+import 'package:nose_touch/presentations/information_card/widgets/form_views/text_form.dart';
 import 'package:nose_touch/services/information_card_service.dart';
 
 class BasicInfoWidget extends HookWidget {

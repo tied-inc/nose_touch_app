@@ -20,7 +20,7 @@ class MyHomePage extends HookWidget {
     final settingsService = SettingsService(database);
 
     return DefaultTabController(
-        length: 3,
+        length: _title.length,
         child: Scaffold(
           appBar: AppBar(
             title: Text(_title.elementAt(selectedIndex.value)),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:nose_touch/services/settings_service.dart';
 
-class SettingsView extends StatelessWidget {
+class SettingsView extends HookWidget {
   final SettingsService settingsService;
 
   const SettingsView({super.key, required this.settingsService});
@@ -16,6 +17,15 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appVersion = useState<String>('');
+
+    useEffect(() {
+      settingsService.getAppVersion().then((value) {
+        appVersion.value = value;
+      });
+      return null;
+    }, []);
+
     return Scaffold(
         body: ListView(children: [
       ListTile(
@@ -25,7 +35,7 @@ class SettingsView extends StatelessWidget {
             context: context,
             applicationIcon: const FlutterLogo(),
             applicationName: 'ノーズタッチ',
-            applicationVersion: '1.0.0',
+            applicationVersion: appVersion.value,
             applicationLegalese: '© 2024 Tied, inc',
           );
         },
@@ -53,7 +63,7 @@ class SettingsView extends StatelessWidget {
                             child: const Text('はい'))
                       ]);
                 });
-          })
+          }),
     ]));
   }
 }
