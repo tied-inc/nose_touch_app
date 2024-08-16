@@ -41,7 +41,19 @@ class NeedsChecklistView extends HookWidget {
                 subtitle: Text(item.description),
                 value: item.value,
                 onChanged: (bool? value) {
-                  service.toggleItemValue(item, value!);
+                  final ret = service.toggleItemValue(item, value!);
+
+                  // item の情報をアップデート後の値で書き換え
+                  final newChecklistItems = data.value?.items.map((e) {
+                    if (e.id == item.id) {
+                      return e.copyWith(value: value);
+                    }
+                    return e;
+                  }).toList();
+                  final newChecklist =
+                      NeedsChecklist(items: newChecklistItems!);
+
+                  data.value = newChecklist;
                 });
           }).toList() ??
           [const CircularProgressIndicator()],

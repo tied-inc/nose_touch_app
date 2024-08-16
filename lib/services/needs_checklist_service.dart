@@ -14,8 +14,9 @@ class NeedsChecklistService {
     return records;
   }
 
-  Future<void> toggleItemValue(NeedsChecklistItem item, bool value) async {
+  Future<NeedsChecklistItem> toggleItemValue(
+      NeedsChecklistItem item, bool value) async {
     final newItem = item.copyWith(value: value);
-    await checklistRepo.updateItem(newItem);
+    return await checklistRepo.updateItem(newItem);
   }
 }

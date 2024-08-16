@@ -115,12 +115,13 @@ class ChecklistRepo implements IChecklistRepo {
   }
 
   @override
-  Future<void> updateItem(NeedsChecklistItem item) async {
-    await (database.update(database.checklistItems)
+  Future<NeedsChecklistItem> updateItem(NeedsChecklistItem item) async {
+    final ret = await (database.update(database.checklistItems)
           ..where((t) => t.id.equals(item.id)))
-        .write(ChecklistItemsCompanion(
+        .writeReturning(ChecklistItemsCompanion(
       value: Value(item.value),
       updatedAt: Value(DateTime.now().millisecondsSinceEpoch),
     ));
+    return NeedsChecklistItem.fromModel(ret.single);
   }
 }
