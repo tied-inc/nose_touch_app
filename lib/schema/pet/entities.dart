@@ -1,7 +1,8 @@
-import 'package:nose_touch/infra/dto/pet.dart';
+import 'package:nose_touch/backend/models/dto/pet.dart';
+import 'package:uuid/uuid.dart';
 
 class PetBasicInfo {
-  int? id;
+  String id;
   String name;
   String species;
   String breed;
@@ -21,7 +22,7 @@ class PetBasicInfo {
   int updatedAt;
 
   PetBasicInfo({
-    this.id,
+    required this.id,
     required this.name,
     required this.species,
     required this.breed,
@@ -38,6 +39,28 @@ class PetBasicInfo {
     required this.createdAt,
     required this.updatedAt,
   });
+
+  factory PetBasicInfo.getDefault() {
+    const uuid = Uuid();
+    return PetBasicInfo(
+      id: uuid.v4(),
+      name: '',
+      species: '',
+      breed: '',
+      color: '',
+      microchipNumber: '',
+      dogRegistrationNumber: '',
+      weight: '',
+      characteristics: '',
+      temper: '',
+      medicalHistory: '',
+      medicalCondition: '',
+      hospitalName: '',
+      hospitalPhoneNumber: '',
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+  }
 
   factory PetBasicInfo.fromModel(Pet model) {
     return PetBasicInfo(
@@ -81,16 +104,16 @@ class PetBasicInfo {
 }
 
 class PetVaccination {
-  int? id;
-  int? petId;
+  final String id;
+  final String petId;
   String vaccinationName;
   String vaccinationDate;
   final int createdAt;
   int updatedAt;
 
   PetVaccination({
-    this.id,
-    this.petId,
+    required this.id,
+    required this.petId,
     required this.vaccinationName,
     required this.vaccinationDate,
     required this.createdAt,

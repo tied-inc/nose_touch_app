@@ -11,13 +11,11 @@ class $ChecklistItemsTable extends ChecklistItems
   $ChecklistItemsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
       'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
+      type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      clientDefault: () => const Uuid().v4());
   static const VerificationMeta _colMeta = const VerificationMeta('col');
   @override
   late final GeneratedColumn<String> col = GeneratedColumn<String>(
@@ -126,7 +124,7 @@ class $ChecklistItemsTable extends ChecklistItems
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return ChecklistItem(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       col: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}col'])!,
       label: attachedDatabase.typeMapping
@@ -149,13 +147,14 @@ class $ChecklistItemsTable extends ChecklistItems
 }
 
 class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
-  final Value<int> id;
+  final Value<String> id;
   final Value<String> col;
   final Value<String> label;
   final Value<String> description;
   final Value<bool> value;
   final Value<int> createdAt;
   final Value<int> updatedAt;
+  final Value<int> rowid;
   const ChecklistItemsCompanion({
     this.id = const Value.absent(),
     this.col = const Value.absent(),
@@ -164,6 +163,7 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
     this.value = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   ChecklistItemsCompanion.insert({
     this.id = const Value.absent(),
@@ -173,19 +173,21 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
     this.value = const Value.absent(),
     required int createdAt,
     required int updatedAt,
+    this.rowid = const Value.absent(),
   })  : col = Value(col),
         label = Value(label),
         description = Value(description),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<ChecklistItem> custom({
-    Expression<int>? id,
+    Expression<String>? id,
     Expression<String>? col,
     Expression<String>? label,
     Expression<String>? description,
     Expression<bool>? value,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -195,17 +197,19 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
       if (value != null) 'value': value,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   ChecklistItemsCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? id,
       Value<String>? col,
       Value<String>? label,
       Value<String>? description,
       Value<bool>? value,
       Value<int>? createdAt,
-      Value<int>? updatedAt}) {
+      Value<int>? updatedAt,
+      Value<int>? rowid}) {
     return ChecklistItemsCompanion(
       id: id ?? this.id,
       col: col ?? this.col,
@@ -214,6 +218,7 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
       value: value ?? this.value,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -221,7 +226,7 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<String>(id.value);
     }
     if (col.present) {
       map['col'] = Variable<String>(col.value);
@@ -241,6 +246,9 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<int>(updatedAt.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -253,7 +261,8 @@ class ChecklistItemsCompanion extends UpdateCompanion<ChecklistItem> {
           ..write('description: $description, ')
           ..write('value: $value, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -266,13 +275,11 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
   $PetsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
       'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
+      type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      clientDefault: () => const Uuid().v4());
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -517,7 +524,7 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Pet(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       species: attachedDatabase.typeMapping
@@ -560,7 +567,7 @@ class $PetsTable extends Pets with TableInfo<$PetsTable, Pet> {
 }
 
 class PetsCompanion extends UpdateCompanion<Pet> {
-  final Value<int> id;
+  final Value<String> id;
   final Value<String> name;
   final Value<String> species;
   final Value<String> breed;
@@ -576,6 +583,7 @@ class PetsCompanion extends UpdateCompanion<Pet> {
   final Value<String> hospitalPhoneNumber;
   final Value<int> createdAt;
   final Value<int> updatedAt;
+  final Value<int> rowid;
   const PetsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -593,6 +601,7 @@ class PetsCompanion extends UpdateCompanion<Pet> {
     this.hospitalPhoneNumber = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   PetsCompanion.insert({
     this.id = const Value.absent(),
@@ -611,10 +620,11 @@ class PetsCompanion extends UpdateCompanion<Pet> {
     this.hospitalPhoneNumber = const Value.absent(),
     required int createdAt,
     required int updatedAt,
+    this.rowid = const Value.absent(),
   })  : createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<Pet> custom({
-    Expression<int>? id,
+    Expression<String>? id,
     Expression<String>? name,
     Expression<String>? species,
     Expression<String>? breed,
@@ -630,6 +640,7 @@ class PetsCompanion extends UpdateCompanion<Pet> {
     Expression<String>? hospitalPhoneNumber,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -650,11 +661,12 @@ class PetsCompanion extends UpdateCompanion<Pet> {
         'hospital_phone_number': hospitalPhoneNumber,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   PetsCompanion copyWith(
-      {Value<int>? id,
+      {Value<String>? id,
       Value<String>? name,
       Value<String>? species,
       Value<String>? breed,
@@ -669,7 +681,8 @@ class PetsCompanion extends UpdateCompanion<Pet> {
       Value<String>? hospitalName,
       Value<String>? hospitalPhoneNumber,
       Value<int>? createdAt,
-      Value<int>? updatedAt}) {
+      Value<int>? updatedAt,
+      Value<int>? rowid}) {
     return PetsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -688,6 +701,7 @@ class PetsCompanion extends UpdateCompanion<Pet> {
       hospitalPhoneNumber: hospitalPhoneNumber ?? this.hospitalPhoneNumber,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -695,7 +709,7 @@ class PetsCompanion extends UpdateCompanion<Pet> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<String>(id.value);
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
@@ -744,6 +758,9 @@ class PetsCompanion extends UpdateCompanion<Pet> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<int>(updatedAt.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -765,7 +782,8 @@ class PetsCompanion extends UpdateCompanion<Pet> {
           ..write('hospitalName: $hospitalName, ')
           ..write('hospitalPhoneNumber: $hospitalPhoneNumber, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -779,18 +797,16 @@ class $VaccinationsTable extends Vaccinations
   $VaccinationsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
       'id', aliasedName, false,
-      hasAutoIncrement: true,
-      type: DriftSqlType.int,
+      type: DriftSqlType.string,
       requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+      clientDefault: () => const Uuid().v4());
   static const VerificationMeta _petIdMeta = const VerificationMeta('petId');
   @override
-  late final GeneratedColumn<int> petId = GeneratedColumn<int>(
+  late final GeneratedColumn<String> petId = GeneratedColumn<String>(
       'pet_id', aliasedName, false,
-      type: DriftSqlType.int,
+      type: DriftSqlType.string,
       requiredDuringInsert: true,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES pets (id)'));
@@ -880,9 +896,9 @@ class $VaccinationsTable extends Vaccinations
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Vaccination(
       id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       petId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}pet_id'])!,
+          .read(DriftSqlType.string, data['${effectivePrefix}pet_id'])!,
       vaccinationName: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}vaccination_name'])!,
       vaccinationDate: attachedDatabase.typeMapping.read(
@@ -901,12 +917,13 @@ class $VaccinationsTable extends Vaccinations
 }
 
 class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
-  final Value<int> id;
-  final Value<int> petId;
+  final Value<String> id;
+  final Value<String> petId;
   final Value<String> vaccinationName;
   final Value<String> vaccinationDate;
   final Value<int> createdAt;
   final Value<int> updatedAt;
+  final Value<int> rowid;
   const VaccinationsCompanion({
     this.id = const Value.absent(),
     this.petId = const Value.absent(),
@@ -914,24 +931,27 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
     this.vaccinationDate = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
   VaccinationsCompanion.insert({
     this.id = const Value.absent(),
-    required int petId,
+    required String petId,
     this.vaccinationName = const Value.absent(),
     this.vaccinationDate = const Value.absent(),
     required int createdAt,
     required int updatedAt,
+    this.rowid = const Value.absent(),
   })  : petId = Value(petId),
         createdAt = Value(createdAt),
         updatedAt = Value(updatedAt);
   static Insertable<Vaccination> custom({
-    Expression<int>? id,
-    Expression<int>? petId,
+    Expression<String>? id,
+    Expression<String>? petId,
     Expression<String>? vaccinationName,
     Expression<String>? vaccinationDate,
     Expression<int>? createdAt,
     Expression<int>? updatedAt,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -940,16 +960,18 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
       if (vaccinationDate != null) 'vaccination_date': vaccinationDate,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
   VaccinationsCompanion copyWith(
-      {Value<int>? id,
-      Value<int>? petId,
+      {Value<String>? id,
+      Value<String>? petId,
       Value<String>? vaccinationName,
       Value<String>? vaccinationDate,
       Value<int>? createdAt,
-      Value<int>? updatedAt}) {
+      Value<int>? updatedAt,
+      Value<int>? rowid}) {
     return VaccinationsCompanion(
       id: id ?? this.id,
       petId: petId ?? this.petId,
@@ -957,6 +979,7 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
       vaccinationDate: vaccinationDate ?? this.vaccinationDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
     );
   }
 
@@ -964,10 +987,10 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<String>(id.value);
     }
     if (petId.present) {
-      map['pet_id'] = Variable<int>(petId.value);
+      map['pet_id'] = Variable<String>(petId.value);
     }
     if (vaccinationName.present) {
       map['vaccination_name'] = Variable<String>(vaccinationName.value);
@@ -981,6 +1004,9 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<int>(updatedAt.value);
     }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
     return map;
   }
 
@@ -992,7 +1018,8 @@ class VaccinationsCompanion extends UpdateCompanion<Vaccination> {
           ..write('vaccinationName: $vaccinationName, ')
           ..write('vaccinationDate: $vaccinationDate, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -1014,85 +1041,31 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$ChecklistItemsTableCreateCompanionBuilder = ChecklistItemsCompanion
     Function({
-  Value<int> id,
+  Value<String> id,
   required String col,
   required String label,
   required String description,
   Value<bool> value,
   required int createdAt,
   required int updatedAt,
+  Value<int> rowid,
 });
 typedef $$ChecklistItemsTableUpdateCompanionBuilder = ChecklistItemsCompanion
     Function({
-  Value<int> id,
+  Value<String> id,
   Value<String> col,
   Value<String> label,
   Value<String> description,
   Value<bool> value,
   Value<int> createdAt,
   Value<int> updatedAt,
+  Value<int> rowid,
 });
-
-class $$ChecklistItemsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $ChecklistItemsTable,
-    ChecklistItem,
-    $$ChecklistItemsTableFilterComposer,
-    $$ChecklistItemsTableOrderingComposer,
-    $$ChecklistItemsTableCreateCompanionBuilder,
-    $$ChecklistItemsTableUpdateCompanionBuilder> {
-  $$ChecklistItemsTableTableManager(
-      _$AppDatabase db, $ChecklistItemsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$ChecklistItemsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ChecklistItemsTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> col = const Value.absent(),
-            Value<String> label = const Value.absent(),
-            Value<String> description = const Value.absent(),
-            Value<bool> value = const Value.absent(),
-            Value<int> createdAt = const Value.absent(),
-            Value<int> updatedAt = const Value.absent(),
-          }) =>
-              ChecklistItemsCompanion(
-            id: id,
-            col: col,
-            label: label,
-            description: description,
-            value: value,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required String col,
-            required String label,
-            required String description,
-            Value<bool> value = const Value.absent(),
-            required int createdAt,
-            required int updatedAt,
-          }) =>
-              ChecklistItemsCompanion.insert(
-            id: id,
-            col: col,
-            label: label,
-            description: description,
-            value: value,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-        ));
-}
 
 class $$ChecklistItemsTableFilterComposer
     extends FilterComposer<_$AppDatabase, $ChecklistItemsTable> {
   $$ChecklistItemsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
+  ColumnFilters<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -1131,7 +1104,7 @@ class $$ChecklistItemsTableFilterComposer
 class $$ChecklistItemsTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $ChecklistItemsTable> {
   $$ChecklistItemsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
+  ColumnOrderings<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
@@ -1167,8 +1140,92 @@ class $$ChecklistItemsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+class $$ChecklistItemsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $ChecklistItemsTable,
+    ChecklistItem,
+    $$ChecklistItemsTableFilterComposer,
+    $$ChecklistItemsTableOrderingComposer,
+    $$ChecklistItemsTableCreateCompanionBuilder,
+    $$ChecklistItemsTableUpdateCompanionBuilder,
+    (
+      ChecklistItem,
+      BaseReferences<_$AppDatabase, $ChecklistItemsTable, ChecklistItem>
+    ),
+    ChecklistItem,
+    PrefetchHooks Function()> {
+  $$ChecklistItemsTableTableManager(
+      _$AppDatabase db, $ChecklistItemsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$ChecklistItemsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$ChecklistItemsTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> col = const Value.absent(),
+            Value<String> label = const Value.absent(),
+            Value<String> description = const Value.absent(),
+            Value<bool> value = const Value.absent(),
+            Value<int> createdAt = const Value.absent(),
+            Value<int> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ChecklistItemsCompanion(
+            id: id,
+            col: col,
+            label: label,
+            description: description,
+            value: value,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            required String col,
+            required String label,
+            required String description,
+            Value<bool> value = const Value.absent(),
+            required int createdAt,
+            required int updatedAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              ChecklistItemsCompanion.insert(
+            id: id,
+            col: col,
+            label: label,
+            description: description,
+            value: value,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$ChecklistItemsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ChecklistItemsTable,
+    ChecklistItem,
+    $$ChecklistItemsTableFilterComposer,
+    $$ChecklistItemsTableOrderingComposer,
+    $$ChecklistItemsTableCreateCompanionBuilder,
+    $$ChecklistItemsTableUpdateCompanionBuilder,
+    (
+      ChecklistItem,
+      BaseReferences<_$AppDatabase, $ChecklistItemsTable, ChecklistItem>
+    ),
+    ChecklistItem,
+    PrefetchHooks Function()>;
 typedef $$PetsTableCreateCompanionBuilder = PetsCompanion Function({
-  Value<int> id,
+  Value<String> id,
   Value<String> name,
   Value<String> species,
   Value<String> breed,
@@ -1184,9 +1241,10 @@ typedef $$PetsTableCreateCompanionBuilder = PetsCompanion Function({
   Value<String> hospitalPhoneNumber,
   required int createdAt,
   required int updatedAt,
+  Value<int> rowid,
 });
 typedef $$PetsTableUpdateCompanionBuilder = PetsCompanion Function({
-  Value<int> id,
+  Value<String> id,
   Value<String> name,
   Value<String> species,
   Value<String> breed,
@@ -1202,103 +1260,32 @@ typedef $$PetsTableUpdateCompanionBuilder = PetsCompanion Function({
   Value<String> hospitalPhoneNumber,
   Value<int> createdAt,
   Value<int> updatedAt,
+  Value<int> rowid,
 });
 
-class $$PetsTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $PetsTable,
-    Pet,
-    $$PetsTableFilterComposer,
-    $$PetsTableOrderingComposer,
-    $$PetsTableCreateCompanionBuilder,
-    $$PetsTableUpdateCompanionBuilder> {
-  $$PetsTableTableManager(_$AppDatabase db, $PetsTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$PetsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$PetsTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> species = const Value.absent(),
-            Value<String> breed = const Value.absent(),
-            Value<String> color = const Value.absent(),
-            Value<String> microchipNumber = const Value.absent(),
-            Value<String> dogRegistrationNumber = const Value.absent(),
-            Value<String> weight = const Value.absent(),
-            Value<String> characteristics = const Value.absent(),
-            Value<String> temper = const Value.absent(),
-            Value<String> medicalHistory = const Value.absent(),
-            Value<String> medicalCondition = const Value.absent(),
-            Value<String> hospitalName = const Value.absent(),
-            Value<String> hospitalPhoneNumber = const Value.absent(),
-            Value<int> createdAt = const Value.absent(),
-            Value<int> updatedAt = const Value.absent(),
-          }) =>
-              PetsCompanion(
-            id: id,
-            name: name,
-            species: species,
-            breed: breed,
-            color: color,
-            microchipNumber: microchipNumber,
-            dogRegistrationNumber: dogRegistrationNumber,
-            weight: weight,
-            characteristics: characteristics,
-            temper: temper,
-            medicalHistory: medicalHistory,
-            medicalCondition: medicalCondition,
-            hospitalName: hospitalName,
-            hospitalPhoneNumber: hospitalPhoneNumber,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-          createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> species = const Value.absent(),
-            Value<String> breed = const Value.absent(),
-            Value<String> color = const Value.absent(),
-            Value<String> microchipNumber = const Value.absent(),
-            Value<String> dogRegistrationNumber = const Value.absent(),
-            Value<String> weight = const Value.absent(),
-            Value<String> characteristics = const Value.absent(),
-            Value<String> temper = const Value.absent(),
-            Value<String> medicalHistory = const Value.absent(),
-            Value<String> medicalCondition = const Value.absent(),
-            Value<String> hospitalName = const Value.absent(),
-            Value<String> hospitalPhoneNumber = const Value.absent(),
-            required int createdAt,
-            required int updatedAt,
-          }) =>
-              PetsCompanion.insert(
-            id: id,
-            name: name,
-            species: species,
-            breed: breed,
-            color: color,
-            microchipNumber: microchipNumber,
-            dogRegistrationNumber: dogRegistrationNumber,
-            weight: weight,
-            characteristics: characteristics,
-            temper: temper,
-            medicalHistory: medicalHistory,
-            medicalCondition: medicalCondition,
-            hospitalName: hospitalName,
-            hospitalPhoneNumber: hospitalPhoneNumber,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-          ),
-        ));
+final class $$PetsTableReferences
+    extends BaseReferences<_$AppDatabase, $PetsTable, Pet> {
+  $$PetsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$VaccinationsTable, List<Vaccination>>
+      _vaccinationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+          db.vaccinations,
+          aliasName: $_aliasNameGenerator(db.pets.id, db.vaccinations.petId));
+
+  $$VaccinationsTableProcessedTableManager get vaccinationsRefs {
+    final manager = $$VaccinationsTableTableManager($_db, $_db.vaccinations)
+        .filter((f) => f.petId.id($_item.id));
+
+    final cache = $_typedResult.readTableOrNull(_vaccinationsRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$PetsTableFilterComposer
     extends FilterComposer<_$AppDatabase, $PetsTable> {
   $$PetsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
+  ColumnFilters<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -1395,7 +1382,7 @@ class $$PetsTableFilterComposer
 class $$PetsTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $PetsTable> {
   $$PetsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
+  ColumnOrderings<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
@@ -1476,80 +1463,185 @@ class $$PetsTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$VaccinationsTableCreateCompanionBuilder = VaccinationsCompanion
-    Function({
-  Value<int> id,
-  required int petId,
-  Value<String> vaccinationName,
-  Value<String> vaccinationDate,
-  required int createdAt,
-  required int updatedAt,
-});
-typedef $$VaccinationsTableUpdateCompanionBuilder = VaccinationsCompanion
-    Function({
-  Value<int> id,
-  Value<int> petId,
-  Value<String> vaccinationName,
-  Value<String> vaccinationDate,
-  Value<int> createdAt,
-  Value<int> updatedAt,
-});
-
-class $$VaccinationsTableTableManager extends RootTableManager<
+class $$PetsTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $VaccinationsTable,
-    Vaccination,
-    $$VaccinationsTableFilterComposer,
-    $$VaccinationsTableOrderingComposer,
-    $$VaccinationsTableCreateCompanionBuilder,
-    $$VaccinationsTableUpdateCompanionBuilder> {
-  $$VaccinationsTableTableManager(_$AppDatabase db, $VaccinationsTable table)
+    $PetsTable,
+    Pet,
+    $$PetsTableFilterComposer,
+    $$PetsTableOrderingComposer,
+    $$PetsTableCreateCompanionBuilder,
+    $$PetsTableUpdateCompanionBuilder,
+    (Pet, $$PetsTableReferences),
+    Pet,
+    PrefetchHooks Function({bool vaccinationsRefs})> {
+  $$PetsTableTableManager(_$AppDatabase db, $PetsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           filteringComposer:
-              $$VaccinationsTableFilterComposer(ComposerState(db, table)),
+              $$PetsTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
-              $$VaccinationsTableOrderingComposer(ComposerState(db, table)),
+              $$PetsTableOrderingComposer(ComposerState(db, table)),
           updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> petId = const Value.absent(),
-            Value<String> vaccinationName = const Value.absent(),
-            Value<String> vaccinationDate = const Value.absent(),
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> species = const Value.absent(),
+            Value<String> breed = const Value.absent(),
+            Value<String> color = const Value.absent(),
+            Value<String> microchipNumber = const Value.absent(),
+            Value<String> dogRegistrationNumber = const Value.absent(),
+            Value<String> weight = const Value.absent(),
+            Value<String> characteristics = const Value.absent(),
+            Value<String> temper = const Value.absent(),
+            Value<String> medicalHistory = const Value.absent(),
+            Value<String> medicalCondition = const Value.absent(),
+            Value<String> hospitalName = const Value.absent(),
+            Value<String> hospitalPhoneNumber = const Value.absent(),
             Value<int> createdAt = const Value.absent(),
             Value<int> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
           }) =>
-              VaccinationsCompanion(
+              PetsCompanion(
             id: id,
-            petId: petId,
-            vaccinationName: vaccinationName,
-            vaccinationDate: vaccinationDate,
+            name: name,
+            species: species,
+            breed: breed,
+            color: color,
+            microchipNumber: microchipNumber,
+            dogRegistrationNumber: dogRegistrationNumber,
+            weight: weight,
+            characteristics: characteristics,
+            temper: temper,
+            medicalHistory: medicalHistory,
+            medicalCondition: medicalCondition,
+            hospitalName: hospitalName,
+            hospitalPhoneNumber: hospitalPhoneNumber,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            rowid: rowid,
           ),
           createCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            required int petId,
-            Value<String> vaccinationName = const Value.absent(),
-            Value<String> vaccinationDate = const Value.absent(),
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> species = const Value.absent(),
+            Value<String> breed = const Value.absent(),
+            Value<String> color = const Value.absent(),
+            Value<String> microchipNumber = const Value.absent(),
+            Value<String> dogRegistrationNumber = const Value.absent(),
+            Value<String> weight = const Value.absent(),
+            Value<String> characteristics = const Value.absent(),
+            Value<String> temper = const Value.absent(),
+            Value<String> medicalHistory = const Value.absent(),
+            Value<String> medicalCondition = const Value.absent(),
+            Value<String> hospitalName = const Value.absent(),
+            Value<String> hospitalPhoneNumber = const Value.absent(),
             required int createdAt,
             required int updatedAt,
+            Value<int> rowid = const Value.absent(),
           }) =>
-              VaccinationsCompanion.insert(
+              PetsCompanion.insert(
             id: id,
-            petId: petId,
-            vaccinationName: vaccinationName,
-            vaccinationDate: vaccinationDate,
+            name: name,
+            species: species,
+            breed: breed,
+            color: color,
+            microchipNumber: microchipNumber,
+            dogRegistrationNumber: dogRegistrationNumber,
+            weight: weight,
+            characteristics: characteristics,
+            temper: temper,
+            medicalHistory: medicalHistory,
+            medicalCondition: medicalCondition,
+            hospitalName: hospitalName,
+            hospitalPhoneNumber: hospitalPhoneNumber,
             createdAt: createdAt,
             updatedAt: updatedAt,
+            rowid: rowid,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) =>
+                  (e.readTable(table), $$PetsTableReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: ({vaccinationsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (vaccinationsRefs) db.vaccinations],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (vaccinationsRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable:
+                            $$PetsTableReferences._vaccinationsRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$PetsTableReferences(db, table, p0)
+                                .vaccinationsRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.petId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
+}
+
+typedef $$PetsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PetsTable,
+    Pet,
+    $$PetsTableFilterComposer,
+    $$PetsTableOrderingComposer,
+    $$PetsTableCreateCompanionBuilder,
+    $$PetsTableUpdateCompanionBuilder,
+    (Pet, $$PetsTableReferences),
+    Pet,
+    PrefetchHooks Function({bool vaccinationsRefs})>;
+typedef $$VaccinationsTableCreateCompanionBuilder = VaccinationsCompanion
+    Function({
+  Value<String> id,
+  required String petId,
+  Value<String> vaccinationName,
+  Value<String> vaccinationDate,
+  required int createdAt,
+  required int updatedAt,
+  Value<int> rowid,
+});
+typedef $$VaccinationsTableUpdateCompanionBuilder = VaccinationsCompanion
+    Function({
+  Value<String> id,
+  Value<String> petId,
+  Value<String> vaccinationName,
+  Value<String> vaccinationDate,
+  Value<int> createdAt,
+  Value<int> updatedAt,
+  Value<int> rowid,
+});
+
+final class $$VaccinationsTableReferences
+    extends BaseReferences<_$AppDatabase, $VaccinationsTable, Vaccination> {
+  $$VaccinationsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $PetsTable _petIdTable(_$AppDatabase db) => db.pets
+      .createAlias($_aliasNameGenerator(db.vaccinations.petId, db.pets.id));
+
+  $$PetsTableProcessedTableManager? get petId {
+    if ($_item.petId == null) return null;
+    final manager = $$PetsTableTableManager($_db, $_db.pets)
+        .filter((f) => f.id($_item.petId!));
+    final item = $_typedResult.readTableOrNull(_petIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
 }
 
 class $$VaccinationsTableFilterComposer
     extends FilterComposer<_$AppDatabase, $VaccinationsTable> {
   $$VaccinationsTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
+  ColumnFilters<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnFilters(column, joinBuilders: joinBuilders));
@@ -1590,7 +1682,7 @@ class $$VaccinationsTableFilterComposer
 class $$VaccinationsTableOrderingComposer
     extends OrderingComposer<_$AppDatabase, $VaccinationsTable> {
   $$VaccinationsTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
+  ColumnOrderings<String> get id => $state.composableBuilder(
       column: $state.table.id,
       builder: (column, joinBuilders) =>
           ColumnOrderings(column, joinBuilders: joinBuilders));
@@ -1627,6 +1719,116 @@ class $$VaccinationsTableOrderingComposer
     return composer;
   }
 }
+
+class $$VaccinationsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $VaccinationsTable,
+    Vaccination,
+    $$VaccinationsTableFilterComposer,
+    $$VaccinationsTableOrderingComposer,
+    $$VaccinationsTableCreateCompanionBuilder,
+    $$VaccinationsTableUpdateCompanionBuilder,
+    (Vaccination, $$VaccinationsTableReferences),
+    Vaccination,
+    PrefetchHooks Function({bool petId})> {
+  $$VaccinationsTableTableManager(_$AppDatabase db, $VaccinationsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$VaccinationsTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$VaccinationsTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> petId = const Value.absent(),
+            Value<String> vaccinationName = const Value.absent(),
+            Value<String> vaccinationDate = const Value.absent(),
+            Value<int> createdAt = const Value.absent(),
+            Value<int> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VaccinationsCompanion(
+            id: id,
+            petId: petId,
+            vaccinationName: vaccinationName,
+            vaccinationDate: vaccinationDate,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            required String petId,
+            Value<String> vaccinationName = const Value.absent(),
+            Value<String> vaccinationDate = const Value.absent(),
+            required int createdAt,
+            required int updatedAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              VaccinationsCompanion.insert(
+            id: id,
+            petId: petId,
+            vaccinationName: vaccinationName,
+            vaccinationDate: vaccinationDate,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$VaccinationsTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({petId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (petId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.petId,
+                    referencedTable:
+                        $$VaccinationsTableReferences._petIdTable(db),
+                    referencedColumn:
+                        $$VaccinationsTableReferences._petIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$VaccinationsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $VaccinationsTable,
+    Vaccination,
+    $$VaccinationsTableFilterComposer,
+    $$VaccinationsTableOrderingComposer,
+    $$VaccinationsTableCreateCompanionBuilder,
+    $$VaccinationsTableUpdateCompanionBuilder,
+    (Vaccination, $$VaccinationsTableReferences),
+    Vaccination,
+    PrefetchHooks Function({bool petId})>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

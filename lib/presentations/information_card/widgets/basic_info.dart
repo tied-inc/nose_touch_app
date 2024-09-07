@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:nose_touch/backend/main.dart';
 import 'package:nose_touch/presentations/information_card/schema.dart';
 import 'package:nose_touch/presentations/information_card/widgets/form_views/text_form.dart';
-import 'package:nose_touch/services/information_card_service.dart';
 
 class BasicInfoWidget extends HookWidget {
-  final InformationCardService service;
+  final BackendApp backendApp;
 
-  const BasicInfoWidget({super.key, required this.service});
+  const BasicInfoWidget({super.key, required this.backendApp});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,10 @@ class BasicInfoWidget extends HookWidget {
 
     fetchData() async {
       try {
-        data.value = await service.getBasicInfo();
+        final ret = await backendApp.petController.detail();
+        data.value = BasicInfoSchema.fromEntity(ret);
       } catch (e) {
+        debugPrint('log error: $e');
         data.value = null;
       }
     }
@@ -44,7 +46,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.name ?? '',
                       onSave: (value) {
                         data.value = data.value!.copyWith(name: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -61,7 +63,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.species ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(species: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -78,7 +80,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.breed ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(breed: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -95,7 +97,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.color ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(color: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -114,7 +116,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(microchipNumber: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -133,7 +135,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(dogRegistrationNumber: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -150,7 +152,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.weight ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(weight: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -169,7 +171,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(characteristics: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -186,7 +188,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.temper ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(temper: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -203,7 +205,7 @@ class BasicInfoWidget extends HookWidget {
                       initialValue: data.value?.hospitalName ?? 'タップして入力してください',
                       onSave: (value) {
                         data.value = data.value!.copyWith(hospitalName: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -222,7 +224,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(hospitalPhoneNumber: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -241,7 +243,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(medicalHistory: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },
@@ -260,7 +262,7 @@ class BasicInfoWidget extends HookWidget {
                       onSave: (value) {
                         data.value =
                             data.value!.copyWith(medicalCondition: value);
-                        service.upsertBasicInfo(data.value!);
+                        backendApp.petController.upsert(data.value!.toEntity());
                       },
                     )));
           },

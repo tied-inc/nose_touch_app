@@ -1,18 +1,26 @@
 import 'package:drift/drift.dart';
-import 'package:nose_touch/domain/entities/needs_checklist.dart';
-import 'package:nose_touch/domain/repo/checklist.dart';
-import 'package:nose_touch/infra/database.dart';
+import 'package:nose_touch/backend/models/database.dart';
+import 'package:nose_touch/schema/checklist/entities.dart';
+import 'package:uuid/uuid.dart';
 
-class ChecklistRepo implements IChecklistRepo {
+class ChecklistUsecase {
   final AppDatabase database;
 
-  ChecklistRepo(this.database);
+  ChecklistUsecase(this.database);
 
-  @override
+  Future<NeedsChecklistItem> getItem(String id) async {
+    final item = await (database.select(database.checklistItems)
+          ..where((tbl) => tbl.id.equals(id)))
+        .getSingle();
+
+    return NeedsChecklistItem.fromModel(item);
+  }
+
   NeedsChecklist getDefaultItems() {
+    const uuid = Uuid();
     return NeedsChecklist(items: [
       NeedsChecklistItem(
-          id: 1,
+          id: uuid.v4(),
           col: 'food',
           label: 'フード',
           description: '最低5日分、できれば7日分',
@@ -20,7 +28,7 @@ class ChecklistRepo implements IChecklistRepo {
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
       NeedsChecklistItem(
-          id: 2,
+          id: uuid.v4(),
           col: 'water',
           label: '水',
           description: '最低5日分、できれば7日分',
@@ -28,7 +36,7 @@ class ChecklistRepo implements IChecklistRepo {
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
       NeedsChecklistItem(
-          id: 3,
+          id: uuid.v4(),
           col: 'medication',
           label: '常備薬・療養食',
           description: '普段使用しているもの',
@@ -36,7 +44,7 @@ class ChecklistRepo implements IChecklistRepo {
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
       NeedsChecklistItem(
-          id: 4,
+          id: uuid.v4(),
           col: 'tableware',
           label: '食器',
           description: 'ラップなどあるとなおよい',
@@ -44,7 +52,7 @@ class ChecklistRepo implements IChecklistRepo {
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
       NeedsChecklistItem(
-          id: 5,
+          id: uuid.v4(),
           col: 'toilet',
           label: 'トイレ',
           description: 'ペットシート、排泄物用ビニール袋、トイレ用の箱など',
@@ -52,41 +60,22 @@ class ChecklistRepo implements IChecklistRepo {
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
       NeedsChecklistItem(
-          id: 6,
+          id: uuid.v4(),
           col: 'carrier',
           label: 'キャリーバック・ケージ',
           description: '普段使用しているものが望ましい',
           value: false,
           createdAt: DateTime.now().millisecondsSinceEpoch,
           updatedAt: DateTime.now().millisecondsSinceEpoch),
-      NeedsChecklistItem(
-          id: 7,
-          col: 'leash',
-          label: 'リード・ハーネス',
-          description: '伸びないものが好ましい',
-          value: false,
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          updatedAt: DateTime.now().millisecondsSinceEpoch),
-      NeedsChecklistItem(
-          id: 8,
-          col: 'laundryNet',
-          label: '洗濯ネット',
-          description: '猫のみ。爪切りなどに使う',
-          value: false,
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          updatedAt: DateTime.now().millisecondsSinceEpoch),
-      NeedsChecklistItem(
-          id: 9,
-          col: 'towelOrBlanket',
-          label: 'タオル・毛布',
-          description: '寒さや雨対策',
-          value: false,
-          createdAt: DateTime.now().millisecondsSinceEpoch,
-          updatedAt: DateTime.now().millisecondsSinceEpoch),
     ]);
   }
 
-  @override
+  Future<NeedsChecklist> getItems() async {
+    final items = database.select(database.checklistItems)
+      ..orderBy([(t) => OrderingTerm(expression: t.id)]);
+    return NeedsChecklist.fromModel(await items.get());
+  }
+
   Future<NeedsChecklist> createDefaultChecklist() async {
     final rows = getDefaultItems().items.map((item) {
       return ChecklistItemsCompanion.insert(
@@ -100,21 +89,13 @@ class ChecklistRepo implements IChecklistRepo {
       );
     }).toList();
 
-    database.batch((batch) async {
+    await database.batch((batch) async {
       batch.insertAll(database.checklistItems, rows);
     });
 
     return getDefaultItems();
   }
 
-  @override
-  Future<NeedsChecklist> getItems() async {
-    final items = database.select(database.checklistItems)
-      ..orderBy([(t) => OrderingTerm(expression: t.id)]);
-    return NeedsChecklist.fromModel(await items.get());
-  }
-
-  @override
   Future<NeedsChecklistItem> updateItem(NeedsChecklistItem item) async {
     final ret = await (database.update(database.checklistItems)
           ..where((t) => t.id.equals(item.id)))

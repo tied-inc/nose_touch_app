@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nose_touch/infra/database.dart';
-import 'package:nose_touch/services/settings_service.dart';
+import 'package:nose_touch/backend/main.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsView extends HookWidget {
-  final AppDatabase database;
+  final BackendApp backendApp;
 
-  const SettingsView({super.key, required this.database});
+  const SettingsView({super.key, required this.backendApp});
 
   @override
   Widget build(BuildContext context) {
     final appVersion = useState<String>('');
-    final service = SettingsService(database);
+
+    Future<String> getAppVersion() async {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      return packageInfo.version;
+    }
 
     useEffect(() {
-      service.getAppVersion().then((value) {
+      getAppVersion().then((value) {
         appVersion.value = value;
       });
       return null;
     }, []);
 
     void handleDelete() {
-      service.reset().then((value) {
+      backendApp.dbController.delete().then((value) {
         ScaffoldMessenger.of(context)
             .showSnackBar(const SnackBar(content: Text('初期状態に戻しました')));
         Navigator.of(context).pop();

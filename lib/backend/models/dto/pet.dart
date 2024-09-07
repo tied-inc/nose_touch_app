@@ -1,5 +1,5 @@
 class Pet {
-  int? id;
+  final String id;
   final String name;
   final String species;
   final String breed;
@@ -17,7 +17,7 @@ class Pet {
   final int updatedAt;
 
   Pet({
-    this.id,
+    required this.id,
     required this.name,
     required this.species,
     required this.breed,
@@ -37,16 +37,16 @@ class Pet {
 }
 
 class Vaccination {
-  int? id;
-  int? petId;
+  final String id;
+  final String petId;
   final String vaccinationName;
   final String vaccinationDate;
   final int createdAt;
   final int updatedAt;
 
   Vaccination({
-    this.id,
-    this.petId,
+    required this.id,
+    required this.petId,
     required this.vaccinationName,
     required this.vaccinationDate,
     required this.createdAt,

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nose_touch/infra/database.dart';
-import 'package:nose_touch/infra/repo/pet.dart';
+import 'package:nose_touch/backend/main.dart';
 import 'package:nose_touch/presentations/information_card/widgets/basic_info.dart';
 import 'package:nose_touch/presentations/information_card/widgets/vaccine_info.dart';
-import 'package:nose_touch/services/information_card_service.dart';
 
 class InformationCardView extends HookWidget {
-  final AppDatabase database;
+  final BackendApp backendApp;
 
-  const InformationCardView({super.key, required this.database});
+  const InformationCardView({super.key, required this.backendApp});
 
   final tabs = const [
     Tab(icon: Icon(Icons.info), text: '基本情報'),
@@ -19,8 +17,6 @@ class InformationCardView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final tabController = useTabController(initialLength: tabs.length);
-    final petRepo = PetRepo(database);
-    final informationCardService = InformationCardService(petRepo);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +30,9 @@ class InformationCardView extends HookWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          BasicInfoWidget(service: informationCardService),
+          BasicInfoWidget(
+            backendApp: backendApp,
+          ),
           VaccineInfo(),
         ],
       ),

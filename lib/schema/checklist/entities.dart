@@ -1,7 +1,7 @@
-import 'package:nose_touch/infra/dto/checklist_item.dart';
+import 'package:nose_touch/backend/models/dto/checklist_item.dart';
 
 class NeedsChecklistItem {
-  final int id;
+  final String id;
   final String col;
   final String label;
   final String description;
@@ -32,7 +32,7 @@ class NeedsChecklistItem {
   }
 
   NeedsChecklistItem copyWith({
-    int? id,
+    String? id,
     String? col,
     String? label,
     String? description,

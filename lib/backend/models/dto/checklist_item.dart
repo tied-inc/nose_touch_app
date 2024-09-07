@@ -1,5 +1,5 @@
 class ChecklistItem {
-  final int id;
+  final String id;
   final String col;
   final String label;
   final String description;

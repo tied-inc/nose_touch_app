@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:nose_touch/infra/database.dart';
+import 'package:nose_touch/backend/main.dart';
 import 'package:nose_touch/presentations/settings/main.dart';
 
 import 'information_card/main.dart';
 import 'needs_checklist/main.dart';
 
 class MyHomePage extends HookWidget {
-  final AppDatabase database;
+  final BackendApp backendApp;
 
-  const MyHomePage({super.key, required this.database});
+  const MyHomePage({super.key, required this.backendApp});
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +23,17 @@ class MyHomePage extends HookWidget {
             title: Text(title.elementAt(selectedIndex.value)),
           ),
           body: [
-            InformationCardView(database: database),
-            NeedsChecklistView(database: database),
-            SettingsView(database: database),
+            InformationCardView(backendApp: backendApp),
+            NeedsChecklistView(backendApp: backendApp),
+            SettingsView(
+              backendApp: backendApp,
+            ),
           ].elementAt(selectedIndex.value),
           bottomNavigationBar: BottomNavigationBar(
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.info),
-                label: "情報カード",
+                label: '情報カード',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.checklist),

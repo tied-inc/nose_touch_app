@@ -1,7 +1,7 @@
-import 'package:nose_touch/domain/entities/pet_info.dart';
+import 'package:nose_touch/schema/pet/entities.dart';
 
 class BasicInfoSchema {
-  int? id;
+  String id;
   final String name;
   final String species;
   final String breed;
@@ -19,7 +19,7 @@ class BasicInfoSchema {
   int updatedAt;
 
   BasicInfoSchema({
-    this.id,
+    required this.id,
     required this.name,
     required this.species,
     required this.breed,
@@ -80,7 +80,7 @@ class BasicInfoSchema {
   }
 
   BasicInfoSchema copyWith({
-    int? id,
+    String? id,
     String? name,
     String? species,
     String? breed,
