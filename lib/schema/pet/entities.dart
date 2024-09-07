@@ -83,6 +83,45 @@ class PetBasicInfo {
     );
   }
 
+  PetBasicInfo copyWith({
+    String? id,
+    String? name,
+    String? species,
+    String? breed,
+    String? color,
+    String? microchipNumber,
+    String? dogRegistrationNumber,
+    String? weight,
+    String? characteristics,
+    String? temper,
+    String? medicalHistory,
+    String? medicalCondition,
+    String? hospitalName,
+    String? hospitalPhoneNumber,
+    int? createdAt,
+    int? updatedAt,
+  }) {
+    return PetBasicInfo(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      species: species ?? this.species,
+      breed: breed ?? this.breed,
+      color: color ?? this.color,
+      microchipNumber: microchipNumber ?? this.microchipNumber,
+      dogRegistrationNumber:
+          dogRegistrationNumber ?? this.dogRegistrationNumber,
+      weight: weight ?? this.weight,
+      characteristics: characteristics ?? this.characteristics,
+      temper: temper ?? this.temper,
+      medicalHistory: medicalHistory ?? this.medicalHistory,
+      medicalCondition: medicalCondition ?? this.medicalCondition,
+      hospitalName: hospitalName ?? this.hospitalName,
+      hospitalPhoneNumber: hospitalPhoneNumber ?? this.hospitalPhoneNumber,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   Pet toModel() => Pet(
         id: id,
         name: name,
@@ -98,44 +137,6 @@ class PetBasicInfo {
         medicalCondition: medicalCondition,
         hospitalName: hospitalName,
         hospitalPhoneNumber: hospitalPhoneNumber,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
-}
-
-class PetVaccination {
-  final String id;
-  final String petId;
-  String vaccinationName;
-  String vaccinationDate;
-  final int createdAt;
-  int updatedAt;
-
-  PetVaccination({
-    required this.id,
-    required this.petId,
-    required this.vaccinationName,
-    required this.vaccinationDate,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-
-  factory PetVaccination.fromModel(Vaccination model) {
-    return PetVaccination(
-      id: model.id,
-      petId: model.petId,
-      vaccinationName: model.vaccinationName,
-      vaccinationDate: model.vaccinationDate,
-      createdAt: model.createdAt,
-      updatedAt: model.updatedAt,
-    );
-  }
-
-  Vaccination toModel() => Vaccination(
-        id: id,
-        petId: petId,
-        vaccinationName: vaccinationName,
-        vaccinationDate: vaccinationDate,
         createdAt: createdAt,
         updatedAt: updatedAt,
       );

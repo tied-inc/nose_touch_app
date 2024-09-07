@@ -1,5 +1,5 @@
 import 'package:nose_touch/backend/models/database.dart';
-import 'package:nose_touch/backend/usecases/checklist_usecase.dart';
+import 'package:nose_touch/backend/usecases/checklist.dart';
 import 'package:nose_touch/schema/checklist/entities.dart';
 import 'package:nose_touch/schema/checklist/requests.dart';
 

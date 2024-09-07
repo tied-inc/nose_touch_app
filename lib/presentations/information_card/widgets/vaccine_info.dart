@@ -1,39 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:nose_touch/backend/main.dart';
+import 'package:nose_touch/presentations/information_card/widgets/form_views/text_form.dart';
+import 'package:nose_touch/schema/vaccinations/entities.dart';
 
 class VaccineInfo extends HookWidget {
-  VaccineInfo({super.key});
+  final String petId;
+  final BackendApp backendApp;
 
-  final data = [
-    {'when': '2024-01-01'},
-    {'what': "3種混合ワクチン"},
-    {'rabiesVaccination': 'テスト病院'},
-    {'parasitePrevention': '1234-5678-9012'},
-  ];
-  final Map<String, String> titleMap = {
-    'when': '接種日',
-    'what': '種類',
-    'rabiesVaccination': '狂犬病予防接種',
-    'parasitePrevention': '寄生虫予防',
-  };
+  const VaccineInfo({super.key, required this.petId, required this.backendApp});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              final key = data[index].keys.first;
-              final value = data[index].values.first;
-              if (key == 'divider') {
-                return const Divider();
-              }
+    final data = useState<PetVaccination?>(null);
 
-              return ListTile(
-                title: Text(titleMap[key]!),
-                trailing: Text(value),
-              );
-            },
-            itemCount: data.length));
+    fetchData() async {
+      try {
+        final ret = await backendApp.vaccinationsController.index(petId);
+        data.value = ret.first;
+      } catch (e) {
+        data.value = null;
+      }
+    }
+
+    useEffect(() {
+      fetchData();
+      return null;
+    }, []);
+
+    if (data.value == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return ListView(children: [
+      ListTile(
+        title: const Text('接種日'),
+        trailing: Text(data.value!.vaccinationDate.isNotEmpty
+            ? data.value?.vaccinationDate ?? ''
+            : 'タップして入力してください'),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TextForm(
+                    label: '接種日',
+                    initialValue: data.value?.vaccinationDate ?? '',
+                    onSave: (value) {
+                      data.value = data.value!.copyWith(vaccinationDate: value);
+                      backendApp.vaccinationsController.upsert(data.value!);
+                    },
+                  )));
+        },
+      ),
+      ListTile(
+        title: const Text('種類'),
+        trailing: Text(data.value!.vaccinationName.isNotEmpty
+            ? data.value?.vaccinationName ?? ''
+            : 'タップして入力してください'),
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TextForm(
+                    label: '種類',
+                    initialValue: data.value?.vaccinationName ?? '',
+                    onSave: (value) {
+                      data.value = data.value!.copyWith(vaccinationName: value);
+                      backendApp.vaccinationsController.upsert(data.value!);
+                    },
+                  )));
+        },
+      ),
+    ]);
   }
 }

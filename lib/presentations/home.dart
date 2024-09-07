@@ -11,6 +11,8 @@ class MyHomePage extends HookWidget {
 
   const MyHomePage({super.key, required this.backendApp});
 
+  static const petId = 'testId';
+
   @override
   Widget build(BuildContext context) {
     final selectedIndex = useState(0);
@@ -23,7 +25,7 @@ class MyHomePage extends HookWidget {
             title: Text(title.elementAt(selectedIndex.value)),
           ),
           body: [
-            InformationCardView(backendApp: backendApp),
+            InformationCardView(petId: petId, backendApp: backendApp),
             NeedsChecklistView(backendApp: backendApp),
             SettingsView(
               backendApp: backendApp,

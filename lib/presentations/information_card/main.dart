@@ -5,9 +5,11 @@ import 'package:nose_touch/presentations/information_card/widgets/basic_info.dar
 import 'package:nose_touch/presentations/information_card/widgets/vaccine_info.dart';
 
 class InformationCardView extends HookWidget {
+  final String petId;
   final BackendApp backendApp;
 
-  const InformationCardView({super.key, required this.backendApp});
+  const InformationCardView(
+      {super.key, required this.petId, required this.backendApp});
 
   final tabs = const [
     Tab(icon: Icon(Icons.info), text: '基本情報'),
@@ -31,9 +33,13 @@ class InformationCardView extends HookWidget {
         controller: tabController,
         children: [
           BasicInfoWidget(
+            petId: petId,
             backendApp: backendApp,
           ),
-          VaccineInfo(),
+          VaccineInfo(
+            petId: petId,
+            backendApp: backendApp,
+          ),
         ],
       ),
     );

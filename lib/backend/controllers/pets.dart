@@ -1,5 +1,5 @@
 import 'package:nose_touch/backend/models/database.dart';
-import 'package:nose_touch/backend/usecases/pet_usecase.dart';
+import 'package:nose_touch/backend/usecases/pet.dart';
 import 'package:nose_touch/schema/pet/entities.dart';
 
 class PetController {
@@ -8,10 +8,10 @@ class PetController {
 
   PetController(this.database) : usecase = PetUsecase(database);
 
-  Future<PetBasicInfo> detail() async {
+  Future<PetBasicInfo> detail(String id) async {
     try {
-      final row = await usecase.getPets();
-      return PetBasicInfo.fromModel(row.first);
+      final row = await usecase.getPet(id);
+      return PetBasicInfo.fromModel(row);
     } catch (e) {
       return PetBasicInfo.getDefault();
     }
