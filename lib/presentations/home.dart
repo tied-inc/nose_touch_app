@@ -11,8 +11,6 @@ class MyHomePage extends HookWidget {
 
   const MyHomePage({super.key, required this.backendApp});
 
-  static const petId = 'testId';
-
   @override
   Widget build(BuildContext context) {
     final selectedIndex = useState(0);
@@ -31,17 +29,6 @@ class MyHomePage extends HookWidget {
       fetchData();
       return null;
     }, []);
-
-    if (petId.value == null) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('ペット情報が登録されていません'),
-        ),
-        body: const Center(
-          child: Text('ペット情報が登録されていません'),
-        ),
-      );
-    }
 
     return DefaultTabController(
         length: title.length,
