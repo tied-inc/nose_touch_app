@@ -18,6 +18,31 @@ class MyHomePage extends HookWidget {
     final selectedIndex = useState(0);
     const title = ['情報カード', 'チェックリスト', '設定'];
 
+    final petId = useState<String?>(null);
+
+    fetchData() async {
+      final pets = await backendApp.petController.list();
+      if (pets.isNotEmpty) {
+        petId.value = pets.first.id;
+      }
+    }
+
+    useEffect(() {
+      fetchData();
+      return null;
+    }, []);
+
+    if (petId.value == null) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('ペット情報が登録されていません'),
+        ),
+        body: const Center(
+          child: Text('ペット情報が登録されていません'),
+        ),
+      );
+    }
+
     return DefaultTabController(
         length: title.length,
         child: Scaffold(
@@ -25,7 +50,8 @@ class MyHomePage extends HookWidget {
             title: Text(title.elementAt(selectedIndex.value)),
           ),
           body: [
-            InformationCardView(petId: petId, backendApp: backendApp),
+            InformationCardView(
+                petId: petId.value ?? '', backendApp: backendApp),
             NeedsChecklistView(backendApp: backendApp),
             SettingsView(
               backendApp: backendApp,
