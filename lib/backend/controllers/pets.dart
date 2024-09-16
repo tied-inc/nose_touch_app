@@ -8,6 +8,11 @@ class PetController {
 
   PetController(this.database) : usecase = PetUsecase(database);
 
+  Future<List<PetBasicInfo>> list() async {
+    final rows = await usecase.getPets();
+    return rows.map((e) => PetBasicInfo.fromModel(e)).toList();
+  }
+
   Future<PetBasicInfo> detail(String id) async {
     try {
       final row = await usecase.getPet(id);

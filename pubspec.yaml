@@ -46,6 +46,7 @@ dependencies:
   package_info_plus: ^8.0.2
   cunning_document_scanner: ^1.2.3
   uuid: ^4.5.0
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +64,14 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  ios: true
+  image_path: "assets/images/launcher/icon_ios.png"
+  remove_alpha_ios: true
+  android: false
+  adaptive_icon_background: "assets/images/launcher/icon_ios.png"
+  adaptive_icon_foreground: "assets/images/launcher/icon_ios.png"
 
 # The following section is specific to Flutter packages.
 flutter:
