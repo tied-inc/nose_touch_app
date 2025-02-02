@@ -1,4 +1,4 @@
-## Pet Owner Disaster Preparedness App
+## Nose Touch | Pet Owner Disaster Preparedness App
 
 This open-source disaster preparedness application is designed specifically for pet owners. It enables you to record essential information about your pets and securely store this data locally on your device. In the event of an emergency, you can quickly access historical health records — such as vaccination details, pet profiles, and more — ensuring you have the necessary information at your fingertips.
 
