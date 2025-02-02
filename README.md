@@ -14,9 +14,9 @@ You can download the latest version of the application directly from the App Sto
 
 ### Screenshots
 
-| Pet | Preparedness |
+|  |  |
 | --- | --- |
-| ![IMG_4429](docs/images/IMG_4429.PNG) | ![IMG_4428](docs/images/IMG_4428.PNG) |
+| ![IMG_4428](docs/images/IMG_4428.PNG) | ![IMG_4429](docs/images/IMG_4429.PNG) |
 
 ## Development & Setup
 For developers interested in contributing, please follow these steps to set up your local development environment:
