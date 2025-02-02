@@ -1063,81 +1063,96 @@ typedef $$ChecklistItemsTableUpdateCompanionBuilder = ChecklistItemsCompanion
 });
 
 class $$ChecklistItemsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ChecklistItemsTable> {
-  $$ChecklistItemsTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $ChecklistItemsTable> {
+  $$ChecklistItemsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get col => $state.composableBuilder(
-      column: $state.table.col,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get col => $composableBuilder(
+      column: $table.col, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get label => $state.composableBuilder(
-      column: $state.table.label,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<bool> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<bool> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 }
 
 class $$ChecklistItemsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ChecklistItemsTable> {
-  $$ChecklistItemsTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $ChecklistItemsTable> {
+  $$ChecklistItemsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get col => $state.composableBuilder(
-      column: $state.table.col,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get col => $composableBuilder(
+      column: $table.col, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get label => $state.composableBuilder(
-      column: $state.table.label,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get label => $composableBuilder(
+      column: $table.label, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<bool> get value => $state.composableBuilder(
-      column: $state.table.value,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<bool> get value => $composableBuilder(
+      column: $table.value, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$ChecklistItemsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChecklistItemsTable> {
+  $$ChecklistItemsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get col =>
+      $composableBuilder(column: $table.col, builder: (column) => column);
+
+  GeneratedColumn<String> get label =>
+      $composableBuilder(column: $table.label, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<bool> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
 }
 
 class $$ChecklistItemsTableTableManager extends RootTableManager<
@@ -1146,6 +1161,7 @@ class $$ChecklistItemsTableTableManager extends RootTableManager<
     ChecklistItem,
     $$ChecklistItemsTableFilterComposer,
     $$ChecklistItemsTableOrderingComposer,
+    $$ChecklistItemsTableAnnotationComposer,
     $$ChecklistItemsTableCreateCompanionBuilder,
     $$ChecklistItemsTableUpdateCompanionBuilder,
     (
@@ -1159,10 +1175,12 @@ class $$ChecklistItemsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$ChecklistItemsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$ChecklistItemsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$ChecklistItemsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChecklistItemsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChecklistItemsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> col = const Value.absent(),
@@ -1216,6 +1234,7 @@ typedef $$ChecklistItemsTableProcessedTableManager = ProcessedTableManager<
     ChecklistItem,
     $$ChecklistItemsTableFilterComposer,
     $$ChecklistItemsTableOrderingComposer,
+    $$ChecklistItemsTableAnnotationComposer,
     $$ChecklistItemsTableCreateCompanionBuilder,
     $$ChecklistItemsTableUpdateCompanionBuilder,
     (
@@ -1282,185 +1301,231 @@ final class $$PetsTableReferences
   }
 }
 
-class $$PetsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $PetsTable> {
-  $$PetsTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+class $$PetsTableFilterComposer extends Composer<_$AppDatabase, $PetsTable> {
+  $$PetsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get species => $state.composableBuilder(
-      column: $state.table.species,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get species => $composableBuilder(
+      column: $table.species, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get breed => $state.composableBuilder(
-      column: $state.table.breed,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get breed => $composableBuilder(
+      column: $table.breed, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get color => $state.composableBuilder(
-      column: $state.table.color,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get color => $composableBuilder(
+      column: $table.color, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get microchipNumber => $state.composableBuilder(
-      column: $state.table.microchipNumber,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get microchipNumber => $composableBuilder(
+      column: $table.microchipNumber,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get dogRegistrationNumber => $state.composableBuilder(
-      column: $state.table.dogRegistrationNumber,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get dogRegistrationNumber => $composableBuilder(
+      column: $table.dogRegistrationNumber,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get weight => $state.composableBuilder(
-      column: $state.table.weight,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get weight => $composableBuilder(
+      column: $table.weight, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get characteristics => $state.composableBuilder(
-      column: $state.table.characteristics,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get characteristics => $composableBuilder(
+      column: $table.characteristics,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get temper => $state.composableBuilder(
-      column: $state.table.temper,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get temper => $composableBuilder(
+      column: $table.temper, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get medicalHistory => $state.composableBuilder(
-      column: $state.table.medicalHistory,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get medicalHistory => $composableBuilder(
+      column: $table.medicalHistory,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get medicalCondition => $state.composableBuilder(
-      column: $state.table.medicalCondition,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get medicalCondition => $composableBuilder(
+      column: $table.medicalCondition,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get hospitalName => $state.composableBuilder(
-      column: $state.table.hospitalName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get hospitalName => $composableBuilder(
+      column: $table.hospitalName, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get hospitalPhoneNumber => $state.composableBuilder(
-      column: $state.table.hospitalPhoneNumber,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get hospitalPhoneNumber => $composableBuilder(
+      column: $table.hospitalPhoneNumber,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 
-  ComposableFilter vaccinationsRefs(
-      ComposableFilter Function($$VaccinationsTableFilterComposer f) f) {
-    final $$VaccinationsTableFilterComposer composer = $state.composerBuilder(
+  Expression<bool> vaccinationsRefs(
+      Expression<bool> Function($$VaccinationsTableFilterComposer f) f) {
+    final $$VaccinationsTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.id,
-        referencedTable: $state.db.vaccinations,
+        referencedTable: $db.vaccinations,
         getReferencedColumn: (t) => t.petId,
-        builder: (joinBuilder, parentComposers) =>
-            $$VaccinationsTableFilterComposer(ComposerState($state.db,
-                $state.db.vaccinations, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$VaccinationsTableFilterComposer(
+              $db: $db,
+              $table: $db.vaccinations,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return f(composer);
   }
 }
 
-class $$PetsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $PetsTable> {
-  $$PetsTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+class $$PetsTableOrderingComposer extends Composer<_$AppDatabase, $PetsTable> {
+  $$PetsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get species => $state.composableBuilder(
-      column: $state.table.species,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get species => $composableBuilder(
+      column: $table.species, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get breed => $state.composableBuilder(
-      column: $state.table.breed,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get breed => $composableBuilder(
+      column: $table.breed, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get color => $state.composableBuilder(
-      column: $state.table.color,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get color => $composableBuilder(
+      column: $table.color, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get microchipNumber => $state.composableBuilder(
-      column: $state.table.microchipNumber,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get microchipNumber => $composableBuilder(
+      column: $table.microchipNumber,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get dogRegistrationNumber => $state.composableBuilder(
-      column: $state.table.dogRegistrationNumber,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get dogRegistrationNumber => $composableBuilder(
+      column: $table.dogRegistrationNumber,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get weight => $state.composableBuilder(
-      column: $state.table.weight,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get weight => $composableBuilder(
+      column: $table.weight, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get characteristics => $state.composableBuilder(
-      column: $state.table.characteristics,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get characteristics => $composableBuilder(
+      column: $table.characteristics,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get temper => $state.composableBuilder(
-      column: $state.table.temper,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get temper => $composableBuilder(
+      column: $table.temper, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get medicalHistory => $state.composableBuilder(
-      column: $state.table.medicalHistory,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get medicalHistory => $composableBuilder(
+      column: $table.medicalHistory,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get medicalCondition => $state.composableBuilder(
-      column: $state.table.medicalCondition,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get medicalCondition => $composableBuilder(
+      column: $table.medicalCondition,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get hospitalName => $state.composableBuilder(
-      column: $state.table.hospitalName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get hospitalName => $composableBuilder(
+      column: $table.hospitalName,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get hospitalPhoneNumber => $state.composableBuilder(
-      column: $state.table.hospitalPhoneNumber,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get hospitalPhoneNumber => $composableBuilder(
+      column: $table.hospitalPhoneNumber,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PetsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PetsTable> {
+  $$PetsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get species =>
+      $composableBuilder(column: $table.species, builder: (column) => column);
+
+  GeneratedColumn<String> get breed =>
+      $composableBuilder(column: $table.breed, builder: (column) => column);
+
+  GeneratedColumn<String> get color =>
+      $composableBuilder(column: $table.color, builder: (column) => column);
+
+  GeneratedColumn<String> get microchipNumber => $composableBuilder(
+      column: $table.microchipNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get dogRegistrationNumber => $composableBuilder(
+      column: $table.dogRegistrationNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get weight =>
+      $composableBuilder(column: $table.weight, builder: (column) => column);
+
+  GeneratedColumn<String> get characteristics => $composableBuilder(
+      column: $table.characteristics, builder: (column) => column);
+
+  GeneratedColumn<String> get temper =>
+      $composableBuilder(column: $table.temper, builder: (column) => column);
+
+  GeneratedColumn<String> get medicalHistory => $composableBuilder(
+      column: $table.medicalHistory, builder: (column) => column);
+
+  GeneratedColumn<String> get medicalCondition => $composableBuilder(
+      column: $table.medicalCondition, builder: (column) => column);
+
+  GeneratedColumn<String> get hospitalName => $composableBuilder(
+      column: $table.hospitalName, builder: (column) => column);
+
+  GeneratedColumn<String> get hospitalPhoneNumber => $composableBuilder(
+      column: $table.hospitalPhoneNumber, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  Expression<T> vaccinationsRefs<T extends Object>(
+      Expression<T> Function($$VaccinationsTableAnnotationComposer a) f) {
+    final $$VaccinationsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.vaccinations,
+        getReferencedColumn: (t) => t.petId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$VaccinationsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.vaccinations,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$PetsTableTableManager extends RootTableManager<
@@ -1469,6 +1534,7 @@ class $$PetsTableTableManager extends RootTableManager<
     Pet,
     $$PetsTableFilterComposer,
     $$PetsTableOrderingComposer,
+    $$PetsTableAnnotationComposer,
     $$PetsTableCreateCompanionBuilder,
     $$PetsTableUpdateCompanionBuilder,
     (Pet, $$PetsTableReferences),
@@ -1478,10 +1544,12 @@ class $$PetsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$PetsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$PetsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$PetsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PetsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PetsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> name = const Value.absent(),
@@ -1594,6 +1662,7 @@ typedef $$PetsTableProcessedTableManager = ProcessedTableManager<
     Pet,
     $$PetsTableFilterComposer,
     $$PetsTableOrderingComposer,
+    $$PetsTableAnnotationComposer,
     $$PetsTableCreateCompanionBuilder,
     $$PetsTableUpdateCompanionBuilder,
     (Pet, $$PetsTableReferences),
@@ -1627,10 +1696,9 @@ final class $$VaccinationsTableReferences
   static $PetsTable _petIdTable(_$AppDatabase db) => db.pets
       .createAlias($_aliasNameGenerator(db.vaccinations.petId, db.pets.id));
 
-  $$PetsTableProcessedTableManager? get petId {
-    if ($_item.petId == null) return null;
+  $$PetsTableProcessedTableManager get petId {
     final manager = $$PetsTableTableManager($_db, $_db.pets)
-        .filter((f) => f.id($_item.petId!));
+        .filter((f) => f.id($_item.petId));
     final item = $_typedResult.readTableOrNull(_petIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -1639,83 +1707,140 @@ final class $$VaccinationsTableReferences
 }
 
 class $$VaccinationsTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $VaccinationsTable> {
-  $$VaccinationsTableFilterComposer(super.$state);
-  ColumnFilters<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $VaccinationsTable> {
+  $$VaccinationsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get vaccinationName => $state.composableBuilder(
-      column: $state.table.vaccinationName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get vaccinationName => $composableBuilder(
+      column: $table.vaccinationName,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<String> get vaccinationDate => $state.composableBuilder(
-      column: $state.table.vaccinationDate,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<String> get vaccinationDate => $composableBuilder(
+      column: $table.vaccinationDate,
+      builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
 
-  ColumnFilters<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
+  ColumnFilters<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
 
   $$PetsTableFilterComposer get petId {
-    final $$PetsTableFilterComposer composer = $state.composerBuilder(
+    final $$PetsTableFilterComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.petId,
-        referencedTable: $state.db.pets,
+        referencedTable: $db.pets,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$PetsTableFilterComposer(
-            ComposerState(
-                $state.db, $state.db.pets, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PetsTableFilterComposer(
+              $db: $db,
+              $table: $db.pets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
 
 class $$VaccinationsTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $VaccinationsTable> {
-  $$VaccinationsTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+    extends Composer<_$AppDatabase, $VaccinationsTable> {
+  $$VaccinationsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get vaccinationName => $state.composableBuilder(
-      column: $state.table.vaccinationName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get vaccinationName => $composableBuilder(
+      column: $table.vaccinationName,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get vaccinationDate => $state.composableBuilder(
-      column: $state.table.vaccinationDate,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<String> get vaccinationDate => $composableBuilder(
+      column: $table.vaccinationDate,
+      builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get createdAt => $state.composableBuilder(
-      column: $state.table.createdAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<int> get updatedAt => $state.composableBuilder(
-      column: $state.table.updatedAt,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
+  ColumnOrderings<int> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
 
   $$PetsTableOrderingComposer get petId {
-    final $$PetsTableOrderingComposer composer = $state.composerBuilder(
+    final $$PetsTableOrderingComposer composer = $composerBuilder(
         composer: this,
         getCurrentColumn: (t) => t.petId,
-        referencedTable: $state.db.pets,
+        referencedTable: $db.pets,
         getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder, parentComposers) => $$PetsTableOrderingComposer(
-            ComposerState(
-                $state.db, $state.db.pets, joinBuilder, parentComposers)));
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PetsTableOrderingComposer(
+              $db: $db,
+              $table: $db.pets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$VaccinationsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaccinationsTable> {
+  $$VaccinationsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get vaccinationName => $composableBuilder(
+      column: $table.vaccinationName, builder: (column) => column);
+
+  GeneratedColumn<String> get vaccinationDate => $composableBuilder(
+      column: $table.vaccinationDate, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  $$PetsTableAnnotationComposer get petId {
+    final $$PetsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.petId,
+        referencedTable: $db.pets,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PetsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pets,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
     return composer;
   }
 }
@@ -1726,6 +1851,7 @@ class $$VaccinationsTableTableManager extends RootTableManager<
     Vaccination,
     $$VaccinationsTableFilterComposer,
     $$VaccinationsTableOrderingComposer,
+    $$VaccinationsTableAnnotationComposer,
     $$VaccinationsTableCreateCompanionBuilder,
     $$VaccinationsTableUpdateCompanionBuilder,
     (Vaccination, $$VaccinationsTableReferences),
@@ -1735,10 +1861,12 @@ class $$VaccinationsTableTableManager extends RootTableManager<
       : super(TableManagerState(
           db: db,
           table: table,
-          filteringComposer:
-              $$VaccinationsTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$VaccinationsTableOrderingComposer(ComposerState(db, table)),
+          createFilteringComposer: () =>
+              $$VaccinationsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaccinationsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaccinationsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> petId = const Value.absent(),
@@ -1796,6 +1924,7 @@ class $$VaccinationsTableTableManager extends RootTableManager<
                       dynamic,
                       dynamic,
                       dynamic,
+                      dynamic,
                       dynamic>>(state) {
                 if (petId) {
                   state = state.withJoin(
@@ -1824,6 +1953,7 @@ typedef $$VaccinationsTableProcessedTableManager = ProcessedTableManager<
     Vaccination,
     $$VaccinationsTableFilterComposer,
     $$VaccinationsTableOrderingComposer,
+    $$VaccinationsTableAnnotationComposer,
     $$VaccinationsTableCreateCompanionBuilder,
     $$VaccinationsTableUpdateCompanionBuilder,
     (Vaccination, $$VaccinationsTableReferences),
